@@ -1,0 +1,147 @@
+body
+{
+    font-family: 'Roboto';
+    font-size: 1em;
+    margin: 0px;
+}
+
+h1
+{
+    margin: 0px;
+
+}
+
+h3
+{
+    font-size: 2.4em;
+    margin: 10px 0px -20px 0px;
+}
+
+h4
+{
+    font-size: 1.8em;
+    font-style: normal;
+    font-family: 'Roboto Condensed';
+    font-weight: 400;
+}
+
+#nametag
+{
+    background-color: #2D112D;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 1px;
+	color: #C9293E;
+}
+
+p
+{
+    margin-left: 2px;
+}
+
+#content
+{
+    padding-left: 40px;    
+}
+
+#nametag ul
+{
+    
+    margin-left: -40px;
+}
+#nametag li
+{
+    display: inline;    
+    background-color: #000;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 30px;
+    text-align: center;
+    font-size: large;
+}
+#nametag a
+{    
+    text-decoration: none;
+}
+#nametag a li:hover
+{
+    background-color: #ff9000;
+}
+#nametag a li
+{
+    color: #fff;
+}
+
+
+#topProjects
+{
+	margin-left: -40px;
+	margin-bottom: 20px;
+    padding-left: 40px;
+    display: inline-block;
+	background-color: #FDDFC1;
+	width: 100%;
+	text-align: center;
+}
+#topProjects h6
+{
+	font-size: x-large;
+	margin: 0;
+	margin-top: 20px;
+	margin-bottom: -30px;
+	padding-left: 10px;
+    font-family: 'Roboto Condensed';
+    font-weight: 300;
+	font-style: italic;
+}
+#topProjects .top
+{
+    margin-top: -20px;
+    display:inline-block;
+    width: 400px;   
+    padding: 20px; 
+    padding-left: 0px;
+    font-size: small;
+    vertical-align: top;
+
+}
+#topProjects img
+{
+    height: 16%;
+}
+#topProjects li
+{
+    list-style-type: none;
+
+}
+
+#latest 
+{
+    display: inline-block;
+    margin-top: -30px;
+	background-color: #441F47;
+	width: 100%;
+	margin-left: -40px;
+	padding-left: 40px;
+	color: #FDDFC1;
+	text-align: center;
+}
+#latest img
+{
+    display: inline;
+    float: left;
+    padding-left: 20px;    
+    padding-right: 20px;
+}
+
+h5
+{
+    font-size: 2em;
+    font-style: italic;
+    font-family: 'Roboto Condensed';
+    font-weight: 300;
+    padding-left: 50px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
