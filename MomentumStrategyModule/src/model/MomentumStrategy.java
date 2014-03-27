@@ -33,6 +33,24 @@ public class MomentumStrategy
 		writer.close();
 	}
 	
+	// Not sure how the LinkedList is formated at the moment but I'm just writing it
+	// the same way you did with the text file
+	public void WriteToCSV() throws IOException
+	{
+		FileWriter writer = new FileWriter("Trades List.csv");
+		
+		for (LinkedList<String> trade : trades) 
+		{
+			for (String field : trade)
+			{
+				writer.append(field +",");
+			}
+			writer.append("\n");
+		}
+		
+		writer.close();
+	}
+	
 	public void SelectTrades() throws FileNotFoundException
 	{		
 		Scanner CSVScanner = new Scanner(new File(fileName));

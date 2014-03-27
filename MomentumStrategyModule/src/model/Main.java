@@ -1,6 +1,7 @@
 package model;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 
@@ -8,7 +9,7 @@ import java.text.ParseException;
 public class Main
 {
 
-	public static void main(String[] args) throws FileNotFoundException, ParseException, UnsupportedEncodingException
+	public static void main(String[] args) throws FileNotFoundException, ParseException, UnsupportedEncodingException, IOException
 	{
 		MomentumStrategy msm = new MomentumStrategy("src/bhp5Feb13.csv");
 		
@@ -19,6 +20,7 @@ public class Main
 		msm.GenerateOrders();
 
 		msm.WriteToFile();
+		msm.WriteToCSV();
 	}
 
 }
