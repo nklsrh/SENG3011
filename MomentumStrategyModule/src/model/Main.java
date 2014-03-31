@@ -11,7 +11,7 @@ public class Main
 	{
 		MyLogger logger;
 		MomentumStrategy msm;
-		File sircaFile, argFile;
+		File sircaFile = null, argFile;
 		
 		// Creating Log File
 		try { logger = new MyLogger(); }
@@ -32,44 +32,43 @@ public class Main
 				if (!argFileExt.equalsIgnoreCase("txt") || !sircaFileExt.equalsIgnoreCase("csv"))
 				{
 					logger.severe("Invalid arguments extension, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
-					return;
 				}
 			}
 			else
 			{
 				logger.severe("Invalid path or files, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
-				return;
 			}
 		}
 		else
 		{
 			logger.severe("Not enough arguments, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
-			return;
 		}
 		
-		
+		if (logger.isSevere()) { logger.appendFooter(null); return; }
 		
 		try
 		{
 			msm = new MomentumStrategy(logger);
 			msm.selectTrades(sircaFile);
-	//		msm.calculateReturns();
+			msm.calculateReturns();
 	//		msm.calculateMovingAverage(3);
 	//		msm.generateTradingSignals(0.001);
 	//		msm.generateOrders();
 	//		msm.writeToFile();
 	//		msm.writeToCSV();
+			
+			logger.appendFooter(sircaFile.getName());
 		}
 		finally
 		{
-			logger.appendFooter();
+			
 		}
 		
 		
 		
 		
 //		Tester for checking exception
-//		new MomentumStrategy(new MyLogger()).selectTrades(new File("src/lala.txt"));
+//		new MomentumStrategy(new MyLogger()).selectTrades(new File("src/sometext.txt"));
 	}
 	
 }

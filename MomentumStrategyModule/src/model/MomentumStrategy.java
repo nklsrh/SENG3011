@@ -2,11 +2,12 @@ package model;
 
 import java.io.*;
 import java.util.*;
-import java.text.ParseException;
 
 
 public class MomentumStrategy
 {
+	public final static String ORDER_FILE = "OrderList.csv";
+	
 	private MyLogger logger;
 	private LinkedList<LinkedList<String>> trades;
 	
@@ -37,7 +38,7 @@ public class MomentumStrategy
 	// the same way you did with the text file
 	public void writeToCSV() throws IOException
 	{
-		FileWriter writer = new FileWriter("Trades List.csv");
+		FileWriter writer = new FileWriter(ORDER_FILE);
 		
 		for (LinkedList<String> trade : trades) 
 		{
@@ -53,11 +54,10 @@ public class MomentumStrategy
 	
 	public void selectTrades(File sircaFile)
 	{
-		logger.info("Executing selectTrades");
-		int counter = 0;
-		
 		try
 		{
+			logger.info("Selecting Trades");
+			int counter = 0;
 			Scanner CSVScanner = new Scanner(sircaFile);
 			CSVScanner.useDelimiter("\n");
 			
@@ -77,18 +77,19 @@ public class MomentumStrategy
 			}
 			
 			CSVScanner.close();
+			logger.info(String.format("Completed with %d Trades selected from %d lines", trades.size(), counter));
 		}
 		catch (FileNotFoundException e)
 		{
 			logger.severe(e.getLocalizedMessage());
 		}
-        
-        logger.info(String.format("Completed with %d Trades selected from %d lines", trades.size(), counter));
 	}
 
 
-	public void calculateReturns() throws ParseException
+	public void calculateReturns()
 	{
+		logger.info("Calculating Returns");
+		
 		for (int t = 0; t < trades.size(); t++)
 		{
 			if (t == 0)
@@ -104,6 +105,8 @@ public class MomentumStrategy
 				trades.get(t).addLast(Double.toString(returnAtTime));
 			}
 		}
+		
+		logger.info("Completed");
 	}
 
 

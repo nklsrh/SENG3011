@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.LogRecord;
@@ -15,23 +16,34 @@ import java.io.PrintWriter;
 
 public class MyLogger
 {
-	private final static String LOG_FILE = "Momentum Strategy Module.log";
+	private final static String LOG_FILE = "MomentumStrategyModule.log";
 	
 	private Logger logger;
+	private boolean isSevere;
+	private SimpleDateFormat sdf;
+	private Date startTime;
 	private FileHandler fileHandler;
-	private boolean isError;
+	private long startNanoTime;
 	
 	
 	public MyLogger() throws SecurityException, IOException
 	{
-		logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+		isSevere = false;
 		fileHandler = new FileHandler(LOG_FILE, true);
-		isError = false;
+		logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+		sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+		startTime = new Date();
+		startNanoTime = System.nanoTime();
 		
 		initLogFile();
 		setupFormatter();
 		logger.setLevel(Level.ALL);
 		logger.addHandler(fileHandler);
+	}
+	
+	public boolean isSevere()
+	{
+		return isSevere;
 	}
 	
 	public void info(String message)
@@ -41,28 +53,29 @@ public class MyLogger
 	
 	public void severe(String message)
 	{
+		isSevere = true;
 		logger.severe(message);
-		isError = true;
 	}
 	
-	public void appendFooter() throws IOException
+	public void appendFooter(String fileName) throws IOException
 	{
 		FileWriter fstream = new FileWriter(LOG_FILE, true);
 		BufferedWriter out = new BufferedWriter(fstream);
 		
 		out.newLine();
-		if (isError)
+		if (isSevere)
 		{
-			out.write("Module completed with error - see above for details");
+			out.write(String.format("%-20s: %s\n", "Status", "Completed with error - see above for details"));
 		}
 		else
 		{
-			out.write("Module completed without error");
-			out.newLine();
-			out.write("Start time: ");
-			out.newLine();
-			out.write("End time: ");
-			out.newLine();
+			out.write(String.format("%-20s: %s\n", "Status", "Completed without error"));
+			out.write(String.format("%-20s: %s\n", "Start Time", sdf.format(startTime)));
+			out.write(String.format("%-20s: %s\n", "End time", sdf.format(new Date())));
+			out.write(String.format("%-20s: %s ms\n", "Elapsed time", TimeUnit.NANOSECONDS.toMillis(System.nanoTime()-startNanoTime)));
+			out.write(String.format("%-20s: %s\n", "Input file", fileName));
+			out.write(String.format("%-20s: %s", "Output produced", LOG_FILE));
+//			out.write(String.format("%-20s: %s %s", "Output produced", MomentumStrategy.ORDER_FILE, LOG_FILE));
 		}
 
 		out.close();
@@ -85,7 +98,6 @@ public class MyLogger
 			@Override
 			public String format(LogRecord record)
 			{
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
 				StringBuffer sb = new StringBuffer(1000);
 				
 				sb.append(sdf.format(new Date()));
