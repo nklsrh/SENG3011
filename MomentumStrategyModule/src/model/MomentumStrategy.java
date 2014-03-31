@@ -7,19 +7,19 @@ import java.text.ParseException;
 
 public class MomentumStrategy
 {
-	private String fileName;
+	private MyLogger logger;
 	private LinkedList<LinkedList<String>> trades;
 	
-	public MomentumStrategy(String fileName)
+	public MomentumStrategy(MyLogger logger)
 	{
-		this.fileName = fileName;
+		this.logger = logger;
 		trades = new LinkedList<LinkedList<String>>();
 	}
 	
 //	XXX - Utility Functions to print out the list of trades
-	public void WriteToFile() throws FileNotFoundException, UnsupportedEncodingException
+	public void writeToFile() throws FileNotFoundException
 	{
-		PrintWriter writer = new PrintWriter("Trades List.txt", "UTF-8");
+		PrintWriter writer = new PrintWriter("Trades List.txt");
 		
 		for (LinkedList<String> trade : trades)
 		{
@@ -35,7 +35,7 @@ public class MomentumStrategy
 	
 	// Not sure how the LinkedList is formated at the moment but I'm just writing it
 	// the same way you did with the text file
-	public void WriteToCSV() throws IOException
+	public void writeToCSV() throws IOException
 	{
 		FileWriter writer = new FileWriter("Trades List.csv");
 		
@@ -51,31 +51,43 @@ public class MomentumStrategy
 		writer.close();
 	}
 	
-	public void SelectTrades() throws FileNotFoundException
-	{		
-		Scanner CSVScanner = new Scanner(new File(fileName));
-        CSVScanner.useDelimiter("\n");
-        
-        while (CSVScanner.hasNext())
-        {
-        	String[] fields = CSVScanner.next().split(",");
-        	
-        	if (fields[3].equalsIgnoreCase("TRADE"))
-        	{
-        		trades.addLast(new LinkedList<String>());
-        		for (String field : fields)
+	public void selectTrades(File sircaFile)
+	{
+		logger.info("Executing selectTrades");
+		int counter = 0;
+		
+		try
+		{
+			Scanner CSVScanner = new Scanner(sircaFile);
+			CSVScanner.useDelimiter("\n");
+			
+			while (CSVScanner.hasNext())
+			{
+				String[] fields = CSVScanner.next().split(",");
+				
+				if (fields[3].equalsIgnoreCase("TRADE"))
 				{
-					trades.getLast().addLast(field);
+					trades.addLast(new LinkedList<String>());
+					for (String field : fields)
+					{
+						trades.getLast().addLast(field);
+					}
 				}
-        	}
-        	
-        }
-
-        CSVScanner.close();
+				counter++;
+			}
+			
+			CSVScanner.close();
+		}
+		catch (FileNotFoundException e)
+		{
+			logger.severe(e.getLocalizedMessage());
+		}
+        
+        logger.info(String.format("Completed with %d Trades selected from %d lines", trades.size(), counter));
 	}
 
 
-	public void CalculateReturns() throws ParseException
+	public void calculateReturns() throws ParseException
 	{
 		for (int t = 0; t < trades.size(); t++)
 		{
@@ -92,16 +104,10 @@ public class MomentumStrategy
 				trades.get(t).addLast(Double.toString(returnAtTime));
 			}
 		}
-		
-
-//		XXX - To be deleted once the above formula is correct
-//		SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
-//		Date time = formatter.parse(trade.get(2));			
-//		System.out.println(time.getHours() +"\t" + price);
 	}
 
 
-	public void CalculateMovingAverage(int n)
+	public void calculateMovingAverage(int n)
 	{
 		for (int t = 0; t < trades.size(); t++)
 		{
@@ -122,7 +128,7 @@ public class MomentumStrategy
 	}
 
 
-	public void GenerateTradingSignals(double th)
+	public void generateTradingSignals(double th)
 	{
 		for (int t = 0; t < trades.size(); t++)
 		{
@@ -150,7 +156,7 @@ public class MomentumStrategy
 	}
 
 
-	public void GenerateOrders()
+	public void generateOrders()
 	{
 		// TODO Auto-generated method stub
 		

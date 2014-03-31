@@ -1,26 +1,75 @@
 package model;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
 
 
 public class Main
 {
-
-	public static void main(String[] args) throws FileNotFoundException, ParseException, UnsupportedEncodingException, IOException
+	
+	public static void main(String[] args) throws IOException
 	{
-		MomentumStrategy msm = new MomentumStrategy("src/bhp5Feb13.csv");
+		MyLogger logger;
+		MomentumStrategy msm;
+		File sircaFile, argFile;
 		
-		msm.SelectTrades();
-		msm.CalculateReturns();
-		msm.CalculateMovingAverage(3);
-		msm.GenerateTradingSignals(0.001);
-		msm.GenerateOrders();
-
-		msm.WriteToFile();
-		msm.WriteToCSV();
+		// Creating Log File
+		try { logger = new MyLogger(); }
+		catch (IOException e) { throw new RuntimeException("Problems with creating log file."); }
+		catch (SecurityException e) { throw new RuntimeException("Problems writing to log file - not enough permission"); }
+		
+		// Check for valid arguments
+		if (args.length == 2)
+		{
+			argFile = new File(args[1]);
+			sircaFile = new File(args[0]);
+			
+			if (sircaFile.isFile() && argFile.isFile())
+			{
+				String argFileExt = argFile.getName().substring(argFile.getName().lastIndexOf(".") + 1, argFile.getName().length());
+				String sircaFileExt = sircaFile.getName().substring(sircaFile.getName().lastIndexOf(".") + 1, sircaFile.getName().length());
+				
+				if (!argFileExt.equalsIgnoreCase("txt") || !sircaFileExt.equalsIgnoreCase("csv"))
+				{
+					logger.severe("Invalid arguments extension, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
+					return;
+				}
+			}
+			else
+			{
+				logger.severe("Invalid path or files, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
+				return;
+			}
+		}
+		else
+		{
+			logger.severe("Not enough arguments, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
+			return;
+		}
+		
+		
+		
+		try
+		{
+			msm = new MomentumStrategy(logger);
+			msm.selectTrades(sircaFile);
+	//		msm.calculateReturns();
+	//		msm.calculateMovingAverage(3);
+	//		msm.generateTradingSignals(0.001);
+	//		msm.generateOrders();
+	//		msm.writeToFile();
+	//		msm.writeToCSV();
+		}
+		finally
+		{
+			logger.appendFooter();
+		}
+		
+		
+		
+		
+//		Tester for checking exception
+//		new MomentumStrategy(new MyLogger()).selectTrades(new File("src/lala.txt"));
 	}
-
+	
 }
