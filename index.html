@@ -3,33 +3,36 @@
     <link rel="stylesheet" href="./style.css"/>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,400italic,300,300italic|Roboto:400,300,500' rel='stylesheet' type='text/css'>
         <title>Fire Breathing Rubber Duckies</title>
+		<img id='ducky' src="./website/ducky.png">
     <div id="nametag">
         <h1><span style="color:#ff7000;">Fire Breathing</span> Rubber Duckies</h1>
         <sub>A SENG3011 team</sub>
         <ul>
             <a href="#topProjects"><li>Releases</li></a>
-            <a href="#latest"><li>About</li></a>
+            <a href="#description"><li>Help</li></a>
         </ul>
     </div>
 </head>
 <body>
     <div id="content">
     <div id="topProjects">
-        <h3>Finance-O-Tron 3000</h3>
 		<h6>Downloads</h6>
         <ul>
             <div id="top1" class="top">
                 <li>
-                    <h4>Version 0.3</h4>
-                    <a href="#">
-                        <img src="http://d13yacurqjgara.cloudfront.net/users/59369/screenshots/1065724/grad.png">
+                    <h4>Version 1.0 (1.3 MB)</h4>
+                    <a href="./website/MSM.jar">
+                        <img src="./website/downloadJar.png">
                     </a>
+                    <p style='font-size: 1.2em; font-weight: bold'>
+						Java JAR Executable file
+					</p>
                     <p>
-						No file here yet!
+						It currently only do up to the second function (selectTrades and calculateReturns).
 					</p>
                 </li>
             </div>
-            <div id="top2" class="top">
+           <!--  <div id="top2" class="top">
                 <li>
                     <h4>Version 0.2</h4>
                     <a href="#">
@@ -39,24 +42,57 @@
 							No file here either!
                         </p>
 				</li>
-            </div>
+            </div> -->
         </ul>
 </div>
+    <div id="description">
+		<p>
+			<h6>To run</h6>
+			<ul style='margin-left: 50px; font-size: 1.2em;'>						
+			<li>1. Open cmd and go to the downloaded JAR's directory</li>						
+			<li>2. Type the following: 
+			<p>
+			<code>java -jar MSM.jar inputFile.csv arguments.txt</code>
+			<p>
+			Where <br>
+			<code>MSM.jar</code> is the program module to be run <br>
+			<code>sircaFile.csv</code> is the input file <br>
+			<code>arguments.txt</code> is a text file which includes parameters needed for the module <br><br>
+			
+			<i style='font-size: 0.8em'> <strong>Note</strong>: The <code>arguments.txt</code> file can be left blank. </i> <br>
+			<i style='font-size: 0.8em'> <strong>Note</strong>: As of v1.0, the module does not yet use <code>arguments.txt</code> </i> <br>
+
+			</p>
+			</p>
+			</li>
+			</ul>
+		</p>
+    </div>
+    <!--<small>Testing Nikhil Suresh's new webpage hosting. Go to <a href='http://nklsrh.tumblr.com'>nklsrh.tumblr.com</a> for my old 'website'. Cheers! </small>-->
+    </div>
     <div id="latest">
         <h3>Who are we?</h3>
         <p>
-            <h5>We are a team of 4: Nikhil Suresh, Louie Song, Alvin Hielman and Nicholas Ho</h5>
+            <h5>We are a team of 4:</h5>
+            <h2>
+				<ul>
+					<li>Alvin Hielman</li>		
+					<li>Nicholas Ho</li>	
+					<li>Louie Song</li>	
+					<li>Nikhil Suresh</li>		
+				<ul>
+			</h2>
             <!--<img src="http://24.media.tumblr.com/fa08679194cd53548470d35665dc4888/tumblr_n1owv4d0uF1rth545o2_500.png">
             <img style="width: 500px; margin-left: -30px" src="http://25.media.tumblr.com/a94c6eb718f9264bbc47f563c54f265a/tumblr_n1owv4d0uF1rth545o3_500.png">
 			-->
              <p>
 				We make software projects like this one.
 			<p>
-			<p>
+			<!-- <p>
 				This is an executable that runs a bunch of awesome algorithms to find you the best trades to make.
 				<br>
 				Simply input trade data (a Sirca .csv file) and receive an output of the recommended trades.
-			</p>
+			</p> -->
         </p>
     </div>
     <!--<small>Testing Nikhil Suresh's new webpage hosting. Go to <a href='http://nklsrh.tumblr.com'>nklsrh.tumblr.com</a> for my old 'website'. Cheers! </small>-->

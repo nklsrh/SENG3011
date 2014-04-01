@@ -1,8 +1,12 @@
 body
 {
     font-family: 'Roboto';
-    font-size: 1em;
+    font-size: 0.9em;
     margin: 0px;
+	background-color: #441F47;
+	
+	padding-left: 7%;
+	padding-right: 7%;
 }
 
 h1
@@ -13,17 +17,26 @@ h1
 
 h3
 {
-    font-size: 2.4em;
+    font-size: 1.4em;
     margin: 10px 0px -20px 0px;
 }
 
 h4
 {
-    font-size: 1.8em;
+    font-size: 1.3em;
     font-style: normal;
     font-family: 'Roboto Condensed';
     font-weight: 400;
 }
+
+#ducky
+{
+	position: absolute;
+	right: 34px;
+	top: 10%;
+	width: 30%;
+}
+
 
 #nametag
 {
@@ -82,8 +95,17 @@ p
     display: inline-block;
 	background-color: #FDDFC1;
 	width: 100%;
-	text-align: center;
+	text-align: left;
 }
+#topProjects a
+{
+
+}
+#topProjects a :hover
+{
+	box-shadow: 0em 0em 0 0.6em #222;
+}
+
 #topProjects h6
 {
 	font-size: x-large;
@@ -116,16 +138,57 @@ p
 
 }
 
+
+
+#description
+{
+	margin-left: -40px;
+	margin-bottom: 20px;
+    padding-left: 40px;
+    display: inline-block;
+	background-color: #FDDFC1;
+	width: 100%;
+	text-align: left;
+}
+#description h6
+{
+	font-size: x-large;
+	margin: 0;
+	margin-top: 20px;
+	margin-bottom: -30px;
+	padding-left: 10px;
+    font-family: 'Roboto Condensed';
+    font-weight: 300;
+	font-style: italic;
+}
+#description .top
+{
+    margin-top: -20px;
+    display:inline-block;
+    width: 400px;   
+    padding: 20px; 
+    padding-left: 0px;
+    font-size: small;
+    vertical-align: top;
+
+}
+#description img
+{
+    height: 16%;
+}
+#description li
+{
+    list-style-type: none;
+
+}
+
 #latest 
 {
     display: inline-block;
-    margin-top: -30px;
 	background-color: #441F47;
 	width: 100%;
-	margin-left: -40px;
-	padding-left: 40px;
 	color: #FDDFC1;
-	text-align: center;
+	padding-left: 30px;
 }
 #latest img
 {
