@@ -64,6 +64,11 @@ p
     margin-left: 2px;
 }
 
+a
+{
+	color: #FF4000;
+}
+
 #content
 {
     padding-left: 40px;    
@@ -109,13 +114,14 @@ p
 	width: 100%;
 	text-align: left;
 }
+
 #topProjects a
 {
-
 }
+
 #topProjects a :hover
 {
-	box-shadow: 0em 0em 0 0.6em #222;
+	box-shadow: 0em 0em 0 0.6em #FF4000;
 }
 
 #topProjects h6
