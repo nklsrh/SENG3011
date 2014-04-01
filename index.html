@@ -15,21 +15,53 @@
 </head>
 <body>
     <div id="content">
+    <div id="heading">
+	<h7 style="margin-top: -19px; color: #FFBA66">Momentum Strategy Module</h7>
+	<h2 style="margin-top: -19px; color: #ff8000">for Financial Trading</h2>
+	</div>
     <div id="topProjects">
 		<h6>Downloads</h6>
         <ul>
             <div id="top1" class="top">
                 <li>
-                    <h4>Version 1.0 (1.3 MB)</h4>
-                    <a href="./website/MSM.jar">
+                    <h4><strong>Version 1.0 </strong>(April 2nd, 2014)</h4>
+                    <a href="./website/v1/MSM.jar">
                         <img src="./website/downloadJar.png">
                     </a>
                     <p style='font-size: 1.2em; font-weight: bold'>
-						Java JAR Executable file
+						Java JAR Executable file (1.3 MB)
+					</p>
+					Tested on <ul><li>Windows 7/8 64-bit</li><li>Mac OSX Mountain Lion</li></ul> <br>with Java 6 (64-bit) and Java 7 (32-bit/64-bit)
+                </li>
+            </div>
+            <div id="top1" class="top">
+                <li>
+                    <h3>What's new in this release?</h3>
+                    <p>
+                    <h4>Implementation</h4>
+						It selects trade transactions from a list of transactions in the CSV file,
+						then calculates its return over time. 
+						<br>
+						The functions are logged and saved to a file called <code>MomentumStrategyModule.log</code>, a log report containing details about the file (number of TRADES, LINES, execution time), which is saved to the working directory.
 					</p>
                     <p>
-						It currently only do up to the second function (selectTrades and calculateReturns).
+                    <h4>Updates</h4>
+						<i>This is the first version.</i>
 					</p>
+                    <p>
+                    <h4>Additional files</h4>
+						<ul style='margin-left: -20px; font-size: 1.2em;'>
+							<li>
+							<!-- <img style='height: 40px' src="./website/downloadJar.png"> <br> -->
+							<a href='./website/v1/inputFile.csv'><code>sircaFile.csv</code>, the test input file with Sirca data  </a>
+							</li>
+							<li>
+							<!-- <img style='height: 40px' src="./website/downloadJar.png"> <br> -->
+							<a href='./website/v1/arguments.txt'><code>arguments.txt</code>, the parameters text file </a> <small>(currently empty)</small>
+							</li>
+						</ul>
+					</p>
+					<i style='font-size: 1em'> <strong>Note</strong>: As of v1.0, the module does not yet use params specified in <code>arguments.txt</code>, but the file is required to exist. </i> <br>
                 </li>
             </div>
            <!--  <div id="top2" class="top">
@@ -49,23 +81,22 @@
 		<p>
 			<h6>To run</h6>
 			<ul style='margin-left: 50px; font-size: 1.2em;'>						
-			<li>1. Open cmd and go to the downloaded JAR's directory</li>						
-			<li>2. Type the following: 
-			<p>
-			<code>java -jar MSM.jar inputFile.csv arguments.txt</code>
-			<p>
-			Where <br>
-			<code>MSM.jar</code> is the program module to be run <br>
-			<code>sircaFile.csv</code> is the input file <br>
-			<code>arguments.txt</code> is a text file which includes parameters needed for the module <br><br>
-			
-			<i style='font-size: 0.8em'> <strong>Note</strong>: The <code>arguments.txt</code> file can be left blank. </i> <br>
-			<i style='font-size: 0.8em'> <strong>Note</strong>: As of v1.0, the module does not yet use <code>arguments.txt</code> </i> <br>
-
-			</p>
-			</p>
-			</li>
+				<li>1. Open cmd and go to the downloaded JAR's directory</li>						
+				<li>2. Type the following: 
+					<p>
+						<code>java -jar MSM.jar inputFile.csv arguments.txt</code>
+						<p style='padding-left: 22px'>
+							Where <br>
+							<code>MSM.jar</code> is the program module to be run <br>
+							<code>sircaFile.csv</code> is the input file <br>
+							<code>arguments.txt</code> is a text file which includes parameters needed for the module			
+						</p>
+					</p>
+				</li>
+				<li>3. The functions are logged and saved to a file called <code>MomentumStrategyModule.log</code> in the same directory.</li>	
 			</ul>
+			<i style='font-size: 0.8em'> <strong>Note</strong>: The <code>arguments.txt</code> file can be left blank. </i> <br>
+			<i style='font-size: 0.8em'> <strong>Note</strong>: As of v1.0, the module does not yet use params specified in <code>arguments.txt</code>, but the file is required to exist </i> 	
 		</p>
     </div>
     <!--<small>Testing Nikhil Suresh's new webpage hosting. Go to <a href='http://nklsrh.tumblr.com'>nklsrh.tumblr.com</a> for my old 'website'. Cheers! </small>-->

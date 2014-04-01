@@ -29,14 +29,26 @@ h4
     font-weight: 400;
 }
 
+h7
+{
+    font-size: 4.3em;
+    font-style: normal;
+    font-family: 'Roboto Condensed';
+    font-weight: 400;
+}
+
 #ducky
 {
 	position: absolute;
 	right: 34px;
-	top: 10%;
-	width: 30%;
+	top: 3%;
+	width: 24%;
 }
 
+#heading
+{
+	color: #FDDFC1;
+}
 
 #nametag
 {
