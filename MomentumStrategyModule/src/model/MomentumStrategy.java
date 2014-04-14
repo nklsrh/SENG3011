@@ -3,6 +3,11 @@ package model;
 import java.io.*;
 import java.util.*;
 
+/**
+ * This class implements the various methods involved in calculations for the Momentum Strategy Module. 
+ * @author Fire Breathing Rubber Duckies
+ *
+ */
 
 public class MomentumStrategy
 {
@@ -17,7 +22,11 @@ public class MomentumStrategy
 		trades = new LinkedList<LinkedList<String>>();
 	}
 	
-//	XXX - Utility Functions to print out the list of trades
+
+	/**
+	 * This method serves as a utility function to print out the list of trades.
+	 * @throws FileNotFoundException
+	 */
 	public void writeToFile() throws FileNotFoundException
 	{
 		PrintWriter writer = new PrintWriter("Trades List.txt");
@@ -34,6 +43,11 @@ public class MomentumStrategy
 		writer.close();
 	}
 	
+	
+	/**
+	 * This method formats and writes the output trade data into a CSV file.
+	 * @throws IOException
+	 */
 	// Not sure how the LinkedList is formated at the moment but I'm just writing it
 	// the same way you did with the text file
 	public void writeToCSV() throws IOException
@@ -52,6 +66,10 @@ public class MomentumStrategy
 		writer.close();
 	}
 	
+	/**
+	 * This method takes in the input Sirca CSV file and selects the relevant trades for further processing
+	 * @param sircaFile
+	 */
 	public void selectTrades(File sircaFile)
 	{
 		try
@@ -85,7 +103,9 @@ public class MomentumStrategy
 		}
 	}
 
-
+	/**
+	 * This method calculates returns.
+	 */
 	public void calculateReturns()
 	{
 		logger.info("Calculating Returns");
@@ -109,7 +129,10 @@ public class MomentumStrategy
 		logger.info("Completed");
 	}
 
-
+	/**
+	 * This method calculates the moving average, given a time n. (?)
+	 * @param n time
+	 */
 	public void calculateMovingAverage(int n)
 	{
 		for (int t = 0; t < trades.size(); t++)
@@ -130,7 +153,10 @@ public class MomentumStrategy
 		}
 	}
 
-
+	/**
+	 * This method generates trading signals of whether to buy or sell.
+	 * @param th
+	 */
 	public void generateTradingSignals(double th)
 	{
 		for (int t = 0; t < trades.size(); t++)
