@@ -51,11 +51,9 @@ public class Main
 			msm = new MomentumStrategy(logger);
 			msm.selectTrades(sircaFile);
 			msm.calculateReturns();
-	//		msm.calculateMovingAverage(3);
-	//		msm.generateTradingSignals(0.001);
-	//		msm.generateOrders();
-	//		msm.writeToFile();
-	//		msm.writeToCSV();
+			msm.calculateMovingAverage(3);
+			msm.generateTradingSignals(0.001);
+			msm.generateOrders();
 			
 			logger.appendFooter(sircaFile.getName());
 		}

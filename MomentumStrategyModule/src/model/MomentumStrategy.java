@@ -17,41 +17,6 @@ public class MomentumStrategy
 		trades = new LinkedList<LinkedList<String>>();
 	}
 	
-//	XXX - Utility Functions to print out the list of trades
-	public void writeToFile() throws FileNotFoundException
-	{
-		PrintWriter writer = new PrintWriter("Trades List.txt");
-		
-		for (LinkedList<String> trade : trades)
-		{
-			for (String field : trade)
-			{
-				writer.print(field +"\t");
-			}
-			writer.println();
-		}
-
-		writer.close();
-	}
-	
-	// Not sure how the LinkedList is formated at the moment but I'm just writing it
-	// the same way you did with the text file
-	public void writeToCSV() throws IOException
-	{
-		FileWriter writer = new FileWriter(ORDER_FILE);
-		
-		for (LinkedList<String> trade : trades) 
-		{
-			for (String field : trade)
-			{
-				writer.append(field +",");
-			}
-			writer.append("\n");
-		}
-		
-		writer.close();
-	}
-	
 	public void selectTrades(File sircaFile)
 	{
 		try
@@ -84,8 +49,7 @@ public class MomentumStrategy
 			logger.severe(e.getLocalizedMessage());
 		}
 	}
-
-
+	
 	public void calculateReturns()
 	{
 		logger.info("Calculating Returns");
@@ -108,10 +72,11 @@ public class MomentumStrategy
 		
 		logger.info("Completed");
 	}
-
-
+	
 	public void calculateMovingAverage(int n)
 	{
+		logger.info("Calculating Moving Average");
+		
 		for (int t = 0; t < trades.size(); t++)
 		{
 			if (t >= n)
@@ -128,11 +93,14 @@ public class MomentumStrategy
 				trades.get(t).addLast(Double.toString(simpleMovingAverage));
 			}
 		}
+		
+		logger.info("Completed");
 	}
-
-
+	
 	public void generateTradingSignals(double th)
 	{
+		logger.info("Generating Trading Signals");
+		
 		for (int t = 0; t < trades.size(); t++)
 		{
 			if (trades.get(t).size() == 20 && trades.get(t-1).size() == 20)
@@ -156,13 +124,34 @@ public class MomentumStrategy
 				trades.get(t).addLast("0");
 			}
 		}
-	}
-
-
-	public void generateOrders()
-	{
-		// TODO Auto-generated method stub
 		
+		logger.info("Completed");
 	}
-
+	
+	public void generateOrders() throws IOException
+	{
+		logger.info("Generating Orders");
+		
+		//TODO - Add Cleanup Linked List Function
+		writeToCSV();
+		
+		logger.info("Completed");
+	}
+	
+	private void writeToCSV() throws IOException
+	{
+		FileWriter writer = new FileWriter(ORDER_FILE);
+		
+		for (LinkedList<String> trade : trades) 
+		{
+			for (String field : trade)
+			{
+				writer.append(field +",");
+			}
+			writer.append("\n");
+		}
+		
+		writer.close();
+	}
+	
 }

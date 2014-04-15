@@ -1,17 +1,17 @@
 package model;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.LogRecord;
 import java.util.logging.Formatter;
 import java.util.logging.FileHandler;
-import java.text.SimpleDateFormat;
-import java.io.BufferedWriter;
+import java.util.concurrent.TimeUnit;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.BufferedWriter;
+import java.text.SimpleDateFormat;
 
 
 public class MyLogger
@@ -19,11 +19,11 @@ public class MyLogger
 	private final static String LOG_FILE = "MomentumStrategyModule.log";
 	
 	private Logger logger;
-	private boolean isSevere;
-	private SimpleDateFormat sdf;
 	private Date startTime;
-	private FileHandler fileHandler;
+	private boolean isSevere;
 	private long startNanoTime;
+	private SimpleDateFormat sdf;
+	private FileHandler fileHandler;
 	
 	
 	public MyLogger() throws SecurityException, IOException
@@ -74,8 +74,7 @@ public class MyLogger
 			out.write(String.format("%-20s: %s\n", "End time", sdf.format(new Date())));
 			out.write(String.format("%-20s: %s ms\n", "Elapsed time", TimeUnit.NANOSECONDS.toMillis(System.nanoTime()-startNanoTime)));
 			out.write(String.format("%-20s: %s\n", "Input file", fileName));
-			out.write(String.format("%-20s: %s", "Output produced", LOG_FILE));
-//			out.write(String.format("%-20s: %s %s", "Output produced", MomentumStrategy.ORDER_FILE, LOG_FILE));
+			out.write(String.format("%-20s: %s %s", "Output produced", MomentumStrategy.ORDER_FILE, LOG_FILE));
 		}
 
 		out.close();
@@ -86,7 +85,7 @@ public class MyLogger
 	{
 		PrintWriter printWriter = new PrintWriter(LOG_FILE);
 		printWriter.println("Fire Breathing Rubber Duckies");
-		printWriter.println("Momentum Strategy Module - Version 1.0");
+		printWriter.println("Momentum Strategy Module - Version 1.1");
 		printWriter.println();
 		printWriter.close();
 	}
