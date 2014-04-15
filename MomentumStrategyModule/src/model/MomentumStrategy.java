@@ -3,6 +3,11 @@ package model;
 import java.io.*;
 import java.util.*;
 
+/**
+ * This class implements the various methods involved in calculations for the Momentum Strategy Module. 
+ * @author Fire Breathing Rubber Duckies
+ *
+ */
 
 public class MomentumStrategy
 {
@@ -17,6 +22,57 @@ public class MomentumStrategy
 		trades = new LinkedList<LinkedList<String>>();
 	}
 	
+<<<<<<< HEAD
+=======
+
+	/**
+	 * This method serves as a utility function to print out the list of trades.
+	 * @throws FileNotFoundException
+	 */
+	public void writeToFile() throws FileNotFoundException
+	{
+		PrintWriter writer = new PrintWriter("Trades List.txt");
+		
+		for (LinkedList<String> trade : trades)
+		{
+			for (String field : trade)
+			{
+				writer.print(field +"\t");
+			}
+			writer.println();
+		}
+
+		writer.close();
+	}
+	
+	
+	/**
+	 * This method formats and writes the output trade data into a CSV file.
+	 * @throws IOException
+	 */
+	// Not sure how the LinkedList is formated at the moment but I'm just writing it
+	// the same way you did with the text file
+	public void writeToCSV() throws IOException
+	{
+		FileWriter writer = new FileWriter(ORDER_FILE);
+		
+		for (LinkedList<String> trade : trades) 
+		{
+			for (String field : trade)
+			{
+				writer.append(field +",");
+			}
+			writer.append("\n");
+		}
+		
+		writer.close();
+	}
+	
+	/**
+	 * This method takes in the input Sirca CSV file and selects the relevant trades for further processing
+	 * @param sircaFile
+	 */
+>>>>>>> 6986df3ec781a3f9d712418542843d20cfb37111
 	public void selectTrades(File sircaFile)
 	{
 		try
@@ -49,7 +105,14 @@ public class MomentumStrategy
 			logger.severe(e.getLocalizedMessage());
 		}
 	}
+<<<<<<< HEAD
 	
+=======
+
+	/**
+	 * This method calculates returns.
+	 */
+>>>>>>> 6986df3ec781a3f9d712418542843d20cfb37111
 	public void calculateReturns()
 	{
 		logger.info("Calculating Returns");
@@ -72,7 +135,15 @@ public class MomentumStrategy
 		
 		logger.info("Completed");
 	}
+<<<<<<< HEAD
 	
+=======
+
+	/**
+	 * This method calculates the moving average, given a time n. (?)
+	 * @param n time
+	 */
+>>>>>>> 6986df3ec781a3f9d712418542843d20cfb37111
 	public void calculateMovingAverage(int n)
 	{
 		logger.info("Calculating Moving Average");
@@ -96,7 +167,15 @@ public class MomentumStrategy
 		
 		logger.info("Completed");
 	}
+<<<<<<< HEAD
 	
+=======
+
+	/**
+	 * This method generates trading signals of whether to buy or sell.
+	 * @param th
+	 */
+>>>>>>> 6986df3ec781a3f9d712418542843d20cfb37111
 	public void generateTradingSignals(double th)
 	{
 		logger.info("Generating Trading Signals");
