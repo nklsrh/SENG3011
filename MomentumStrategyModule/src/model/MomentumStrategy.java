@@ -4,7 +4,11 @@ import java.io.*;
 import java.util.*;
 
 /**
- * This class implements the various methods involved in calculations for the Momentum Strategy Module. 
+ * This class implements the various methods involved in calculations for the Momentum Strategy Module.<br>
+ * There are 6 steps -<br>
+ * 1) Reading the order book - Sirca CSV file and arguments text file are taken in.<br>
+ * 2) Select Trades - Rows which are labelled as a "TRADE" are selected and isolated for further processing<br>
+ * 3) Calculate Returns - 
  * @author Fire Breathing Rubber Duckies
  * @version 1.1
  */
@@ -22,8 +26,9 @@ public class MomentumStrategy
 	}
 	
 	/**
-	 * This method takes in the input Sirca CSV file and selects the relevant trades for further processing
-	 * @param sircaFile
+	 * This method takes in the input Sirca CSV file and reads it with a scanner.
+	 * Rows that are recorded as a "TRADE" are selected and placed in an array for further processing.
+	 * @param sircaFile the Sirca CSV file
 	 * @throws FileNotFoundException 
 	 */
 	public void selectTrades(File sircaFile) throws FileNotFoundException
@@ -59,7 +64,12 @@ public class MomentumStrategy
 	}
 	
 	/**
-	 * This method calculates returns.
+	 * This method calculates returns, from the rows of Trades obtained from the previous step of obtaining trades.<br>
+	 * calculations are conducted based on the formula:<p>
+	 * R<sub>t</sub> = (P<sub>t</sub> - P<sub>t-1</sub>) / P<sub>t-1</sub><p>where<br>
+	 * R<sub>t</sub> : Return at time t<br>
+	 * P<sub>t</sub> : Price traded at time t<br>
+	 * P<sub>t-1</sub>: Price traded at time t-1 (i.e. the previous price before the price listed at t)
 	 */
 	public void calculateReturns()
 	{
@@ -85,8 +95,11 @@ public class MomentumStrategy
 	}
 	
 	/**
-	 * This method calculates the moving average, given a time n. (?)
-	 * @param n time
+	 * This method calculates the moving average, given a parameter <b>n</b>. (?)<br>
+	 * Simple moving average is calculated over a window of <b>n</b> number of returns.<br>
+	 * if we take n = 3, and t >= n, then we take the sum of the R<sub>t</sub> values for the current
+	 * t and 2 previous values (for a total of 3) and divide it by n=3.
+	 * @param n parameter for the number of "t"s to take into account
 	 */
 	public void calculateMovingAverage(int n)
 	{
