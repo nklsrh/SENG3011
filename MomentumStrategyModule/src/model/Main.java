@@ -81,7 +81,7 @@ public class Main
 		}
 		catch (Exception e)
 		{
-			logger.severe(e.getLocalizedMessage());
+			logger.severe(e.getMessage());
 		}
 	}
 	

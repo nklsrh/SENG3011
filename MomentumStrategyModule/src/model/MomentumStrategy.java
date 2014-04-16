@@ -13,12 +13,12 @@ public class MomentumStrategy
 	public final static String ORDER_FILE = "OrderList.csv";
 	
 	private MyLogger logger;
-	private LinkedList<LinkedList<String>> trades;
+	private ArrayList<ArrayList<String>> trades;
 	
 	public MomentumStrategy(MyLogger logger)
 	{
 		this.logger = logger;
-		trades = new LinkedList<LinkedList<String>>();
+		trades = new ArrayList<ArrayList<String>>(20000);
 	}
 	
 	/**
@@ -40,12 +40,16 @@ public class MomentumStrategy
 			
 			if (fields[3].equalsIgnoreCase("TRADE"))
 			{
-				trades.addLast(new LinkedList<String>());
+				ArrayList<String> tradeElements = new ArrayList<String>(25);
+				
 				for (String field : fields)
 				{
-					trades.getLast().addLast(field);
+					tradeElements.add(field);
 				}
+				
+				trades.add(tradeElements);
 			}
+			
 			counter++;
 		}
 		
@@ -65,7 +69,7 @@ public class MomentumStrategy
 		{
 			if (t == 0)
 			{
-				trades.get(t).addLast(Double.toString(0));
+				trades.get(t).add(Double.toString(0));
 			}
 			else
 			{
@@ -73,7 +77,7 @@ public class MomentumStrategy
 				double priceTradedAsTime = Double.parseDouble(trades.get(t-1).get(4));
 				double returnAtTime = (priceTradedAtTime - priceTradedAsTime) / priceTradedAsTime;
 				
-				trades.get(t).addLast(Double.toString(returnAtTime));
+				trades.get(t).add(Double.toString(returnAtTime));
 			}
 		}
 		
@@ -90,18 +94,22 @@ public class MomentumStrategy
 		
 		for (int t = 0; t < trades.size(); t++)
 		{
-			if (t >= n)
+			if ((t+1) >= n)
 			{
 				double simpleMovingAverage, sumOfReturns = 0;
 				 
-				for(int i = t, c = 0; c != n; i--, c++)
+				for(int i = t, c = 0; c < n; i--, c++)
 				{
 					//Field 18 is trades returns calculated and added in the previous method
 					sumOfReturns += Double.parseDouble(trades.get(i).get(18));
 				}
 				
-				simpleMovingAverage = sumOfReturns / 3;
-				trades.get(t).addLast(Double.toString(simpleMovingAverage));
+				simpleMovingAverage = sumOfReturns / n;
+				trades.get(t).add(Double.toString(simpleMovingAverage));
+			}
+			else
+			{
+				trades.get(t).add("");
 			}
 		}
 		
@@ -118,25 +126,30 @@ public class MomentumStrategy
 		
 		for (int t = 0; t < trades.size(); t++)
 		{
-			if (trades.get(t).size() == 20 && trades.get(t-1).size() == 20)
+			if (!trades.get(t).get(19).isEmpty() && !trades.get(t-1).get(19).isEmpty())
 			{
 				double tsv = Double.parseDouble(trades.get(t).get(19)) - Double.parseDouble(trades.get(t-1).get(19));
+				
 				if (tsv > th)
 				{
-					trades.get(t).addLast("BUY");					
+					trades.get(t).set(12, "B");
 				}
 				else if (tsv < th)
 				{
-					trades.get(t).addLast("SELL");
+					trades.get(t).set(12, "A");
 				}
 				else
 				{
-					trades.get(t).addLast("0");
+					trades.get(t).add("NOTHING");
 				}
+			}
+			else if (!trades.get(t).get(19).isEmpty() && trades.get(t-1).get(19).isEmpty())
+			{
+				trades.get(t).add("UNDEFINED");
 			}
 			else
 			{
-				trades.get(t).addLast("0");
+				trades.get(t).add("");
 			}
 		}
 		
@@ -147,7 +160,6 @@ public class MomentumStrategy
 	{
 		logger.info("Generating Orders");
 		
-		cleanList();
 		writeToCSV();
 		
 		logger.info("Completed");
@@ -161,22 +173,28 @@ public class MomentumStrategy
 	{
 		FileWriter writer = new FileWriter(ORDER_FILE);
 		
-		for (LinkedList<String> trade : trades) 
+		for (ArrayList<String> trade : trades) 
 		{
-			for (String field : trade)
+			for (int i = 0; i < 18; i++)
 			{
-				writer.append(field +",");
+				if (i == 5)
+				{
+					writer.append("100,");
+				}
+				else if (i == 7)
+				{
+					double value = 100 * Double.parseDouble(trade.get(4));
+					writer.append(Double.toString(value) +",");
+				}
+				else
+				{
+					writer.append(trade.get(i) +",");
+				}
 			}
 			writer.append("\n");
 		}
 		
 		writer.close();
-	}
-	
-	private void cleanList()
-	{
-		//TODO
-		
 	}
 	
 }
