@@ -107,6 +107,9 @@ public class MomentumStrategy
 		
 		for (int t = 0; t < trades.size(); t++)
 		{
+			// If n = 3, there will be no SMA for t1 and t2. Hence we only calculate a SMA if t+1 >= n.
+			// We use t+1 because indexing for t starts from 0. (software restriction?)
+			// There is nothing in t0. SMA of t0 = 0.
 			if ((t+1) >= n)
 			{
 				double simpleMovingAverage, sumOfReturns = 0;
@@ -130,7 +133,11 @@ public class MomentumStrategy
 	}
 
 	/**
-	 * This method generates trading signals of whether to buy or sell.
+	 * This method generates trading signals of whether to buy or sell, given a threshold value "<b>th</b>".<br>
+	 * We calculate the trading signal TSv<sub>t</sub> = SMA<sub>t</sub> - SMA<sub>t-1</sub><br>
+	 * If TSv<sub>t</sub> > TH, BUY ("B").<br>
+	 * If TSv<sub>t</sub> < TH, SELL ("A").<br>
+	 * Else, Not defined ("NOTHING").
 	 * @param th
 	 */
 	public void generateTradingSignals(double th)
@@ -169,6 +176,10 @@ public class MomentumStrategy
 		logger.info("Completed");
 	}
 	
+	/**
+	 * Writes the trading signals from the above method to the CSV file.
+	 * @throws IOException
+	 */
 	public void generateOrders() throws IOException
 	{
 		logger.info("Generating Orders");
