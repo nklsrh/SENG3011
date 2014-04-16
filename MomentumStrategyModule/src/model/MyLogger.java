@@ -19,12 +19,11 @@ public class MyLogger
 	private final static String LOG_FILE = "MomentumStrategyModule.log";
 	
 	private Logger logger;
-	private Date startTime;
+	private Date startDate;
 	private boolean isSevere;
 	private long startNanoTime;
 	private SimpleDateFormat sdf;
 	private FileHandler fileHandler;
-	
 	
 	public MyLogger() throws SecurityException, IOException
 	{
@@ -32,7 +31,7 @@ public class MyLogger
 		fileHandler = new FileHandler(LOG_FILE, true);
 		logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 		sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
-		startTime = new Date();
+		startDate = new Date();
 		startNanoTime = System.nanoTime();
 		
 		initLogFile();
@@ -41,23 +40,20 @@ public class MyLogger
 		logger.addHandler(fileHandler);
 	}
 	
-	public boolean isSevere()
-	{
-		return isSevere;
-	}
-	
 	public void info(String message)
 	{
 		logger.info(message);
 	}
 	
-	public void severe(String message)
+	public void severe(String message) throws IOException
 	{
 		isSevere = true;
 		logger.severe(message);
+		appendFooter(null);
+		System.exit(1);
 	}
 	
-	public void appendFooter(String fileName) throws IOException
+	public void appendFooter(String sircaFile) throws IOException
 	{
 		FileWriter fstream = new FileWriter(LOG_FILE, true);
 		BufferedWriter out = new BufferedWriter(fstream);
@@ -70,10 +66,10 @@ public class MyLogger
 		else
 		{
 			out.write(String.format("%-20s: %s\n", "Status", "Completed without error"));
-			out.write(String.format("%-20s: %s\n", "Start Time", sdf.format(startTime)));
+			out.write(String.format("%-20s: %s\n", "Start time", sdf.format(startDate)));
 			out.write(String.format("%-20s: %s\n", "End time", sdf.format(new Date())));
 			out.write(String.format("%-20s: %s ms\n", "Elapsed time", TimeUnit.NANOSECONDS.toMillis(System.nanoTime()-startNanoTime)));
-			out.write(String.format("%-20s: %s\n", "Input file", fileName));
+			out.write(String.format("%-20s: %s\n", "Input file", sircaFile));
 			out.write(String.format("%-20s: %s %s", "Output produced", MomentumStrategy.ORDER_FILE, LOG_FILE));
 		}
 

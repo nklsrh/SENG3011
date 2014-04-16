@@ -2,6 +2,8 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
+import java.util.NoSuchElementException;
 
 
 public class Main
@@ -11,19 +13,23 @@ public class Main
 	{
 		MyLogger logger;
 		MomentumStrategy msm;
-		File sircaFile = null, argFile;
+		File argFile = null;
+		File sircaFile = null;
+		double threshold = 0;
+		int window = 0;
 		
 		// Creating Log File
 		try { logger = new MyLogger(); }
 		catch (IOException e) { throw new RuntimeException("Problems with creating log file."); }
 		catch (SecurityException e) { throw new RuntimeException("Problems writing to log file - not enough permission"); }
 		
-		// Check for valid arguments
+		// Checking for valid file arguments
 		if (args.length == 2)
 		{
 			argFile = new File(args[1]);
 			sircaFile = new File(args[0]);
 			
+			// Checking for valid file extension and path
 			if (sircaFile.isFile() && argFile.isFile())
 			{
 				String argFileExt = argFile.getName().substring(argFile.getName().lastIndexOf(".") + 1, argFile.getName().length());
@@ -38,35 +44,45 @@ public class Main
 			{
 				logger.severe("Invalid path or files, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
 			}
+			
+			// Getting parameter from argument file
+			try
+			{
+				Scanner sc = new Scanner(argFile);
+				window = Integer.parseInt(sc.next());
+				threshold = Double.parseDouble(sc.next());
+				sc.close();
+			}
+			catch (NoSuchElementException e)
+			{
+				logger.severe("Not enough lines in argument file, there must be at least 2 lines");
+			}
+			catch (NumberFormatException e)
+			{
+				logger.severe("Invalid format inside argument file, format must be of type integer and double");
+			}
 		}
 		else
 		{
 			logger.severe("Not enough arguments, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
 		}
 		
-		if (logger.isSevere()) { logger.appendFooter(null); return; }
-		
+		// Start of Module Execution
 		try
 		{
 			msm = new MomentumStrategy(logger);
 			msm.selectTrades(sircaFile);
 			msm.calculateReturns();
-			msm.calculateMovingAverage(3);
-			msm.generateTradingSignals(0.001);
+			msm.calculateMovingAverage(window);
+			msm.generateTradingSignals(threshold);
 			msm.generateOrders();
 			
 			logger.appendFooter(sircaFile.getName());
 		}
-		finally
+		catch (Exception e)
 		{
-			
+			logger.severe(e.getLocalizedMessage());
 		}
-		
-		
-		
-		
-//		Tester for checking exception
-//		new MomentumStrategy(new MyLogger()).selectTrades(new File("src/sometext.txt"));
 	}
 	
 }

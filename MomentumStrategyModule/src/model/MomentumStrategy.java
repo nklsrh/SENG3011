@@ -24,38 +24,34 @@ public class MomentumStrategy
 	/**
 	 * This method takes in the input Sirca CSV file and selects the relevant trades for further processing
 	 * @param sircaFile
+	 * @throws FileNotFoundException 
 	 */
-	public void selectTrades(File sircaFile)
+	public void selectTrades(File sircaFile) throws FileNotFoundException
 	{
-		try
+		logger.info("Selecting Trades");
+		
+		int counter = 0;
+		Scanner CSVScanner = new Scanner(sircaFile);
+		CSVScanner.useDelimiter("\n");
+		
+		while (CSVScanner.hasNext())
 		{
-			logger.info("Selecting Trades");
-			int counter = 0;
-			Scanner CSVScanner = new Scanner(sircaFile);
-			CSVScanner.useDelimiter("\n");
+			String[] fields = CSVScanner.next().split(",");
 			
-			while (CSVScanner.hasNext())
+			if (fields[3].equalsIgnoreCase("TRADE"))
 			{
-				String[] fields = CSVScanner.next().split(",");
-				
-				if (fields[3].equalsIgnoreCase("TRADE"))
+				trades.addLast(new LinkedList<String>());
+				for (String field : fields)
 				{
-					trades.addLast(new LinkedList<String>());
-					for (String field : fields)
-					{
-						trades.getLast().addLast(field);
-					}
+					trades.getLast().addLast(field);
 				}
-				counter++;
 			}
-			
-			CSVScanner.close();
-			logger.info(String.format("Completed with %d Trades selected from %d lines", trades.size(), counter));
+			counter++;
 		}
-		catch (FileNotFoundException e)
-		{
-			logger.severe(e.getLocalizedMessage());
-		}
+		
+		CSVScanner.close();
+		
+		logger.info(String.format("Completed with %d Trades selected from %d lines", trades.size(), counter));
 	}
 	
 	/**
@@ -90,7 +86,7 @@ public class MomentumStrategy
 	 */
 	public void calculateMovingAverage(int n)
 	{
-		logger.info("Calculating Moving Average");
+		logger.info("Calculating Moving Average with window parameter of: " +n);
 		
 		for (int t = 0; t < trades.size(); t++)
 		{
@@ -118,7 +114,7 @@ public class MomentumStrategy
 	 */
 	public void generateTradingSignals(double th)
 	{
-		logger.info("Generating Trading Signals");
+		logger.info("Generating Trading Signals with threshold of: " +th);
 		
 		for (int t = 0; t < trades.size(); t++)
 		{
@@ -151,7 +147,7 @@ public class MomentumStrategy
 	{
 		logger.info("Generating Orders");
 		
-		//TODO - Add Cleanup Linked List Function
+		cleanList();
 		writeToCSV();
 		
 		logger.info("Completed");
@@ -175,6 +171,12 @@ public class MomentumStrategy
 		}
 		
 		writer.close();
+	}
+	
+	private void cleanList()
+	{
+		//TODO
+		
 	}
 	
 }
