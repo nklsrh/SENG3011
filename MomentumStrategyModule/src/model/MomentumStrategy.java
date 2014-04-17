@@ -221,4 +221,8 @@ public class MomentumStrategy
 		writer.close();
 	}
 	
+	public ArrayList<ArrayList<String>> getTrades() 
+	{
+		return trades;
+	}
 }

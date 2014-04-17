@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.NoSuchElementException;
 
+import model.test.MomentumStrategyTest;
 
 public class Main
 {
@@ -17,7 +18,7 @@ public class Main
 		File sircaFile = null;
 		double threshold = 0;
 		int window = 0;
-		boolean test = false;
+		boolean test = true;
 		
 		// Creating Log File
 		try { logger = new MyLogger(); }
@@ -71,7 +72,13 @@ public class Main
 		// If test mode is enabled, do tests
 		if (test) 
 		{
-			
+			try {
+				MomentumStrategyTest tester = new MomentumStrategyTest(sircaFile);
+				tester.testSelectTrades();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} 
 		else 
 		{

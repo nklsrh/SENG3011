@@ -3,45 +3,49 @@ package model.test;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import model.MomentumStrategy;
+import model.MyLogger;
 
 public class MomentumStrategyTest {
 
+	private File sircaFile;
+	private MomentumStrategy msm;
 	
-	
-	@Before
-	public void setUp() throws Exception {
-		
+	public MomentumStrategyTest(File sircaFile) throws Exception {
+		this.sircaFile = sircaFile;
+		msm = new MomentumStrategy(new MyLogger());
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
 	public void testSelectTrades() {
-		fail("Not yet implemented");
+		try {
+			msm.selectTrades(sircaFile);
+			ArrayList<ArrayList<String>> trades = msm.getTrades();
+			
+			for (int i = 0 ; i < trades.size() ; i++) {
+				assert trades.get(i).get(3).equalsIgnoreCase("TRADE") : "Entry on line "+i+"is not a 'TRADE'!";
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	@Test
 	public void testCalculateReturns() {
 		fail("Not yet implemented");
 	}
 
-	@Test
 	public void testCalculateMovingAverage() {
 		fail("Not yet implemented");
 	}
 
-	@Test
 	public void testGenerateTradingSignals() {
 		fail("Not yet implemented");
 	}
 
-	@Test
 	public void testGenerateOrders() {
 		fail("Not yet implemented");
 	}
