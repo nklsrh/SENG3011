@@ -21,23 +21,32 @@ public class MomentumStrategyTest {
 	}
 
 	public void testSelectTrades() {
+		System.out.println(":::::::::::::			Starting tests			:::::::::::::");
+		System.out.println(".............		Testing selectTrades()		.............");
 		try {
 			msm.selectTrades(sircaFile);
 			ArrayList<ArrayList<String>> trades = msm.getTrades();
 			
 			for (int i = 0 ; i < trades.size() ; i++) {
 				assert trades.get(i).get(3).equalsIgnoreCase("TRADE") : "Entry on line "+i+"is not a 'TRADE'!";
+				if (i % 20 == 0) {
+					System.out.println(".");
+				}
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(".............		selectTrades() is OK		.............");
 	}
 
+	// Column "S" in csv is returns.
 	public void testCalculateReturns() {
-		fail("Not yet implemented");
+		System.out.println(".............	Testing calculateReturns()		.............");
+		msm.calculateReturns();
 	}
 
+	// column "T" is average.
 	public void testCalculateMovingAverage() {
 		fail("Not yet implemented");
 	}
