@@ -17,6 +17,7 @@ public class Main
 		File sircaFile = null;
 		double threshold = 0;
 		int window = 0;
+		boolean test = false;
 		
 		// Creating Log File
 		try { logger = new MyLogger(); }
@@ -67,21 +68,29 @@ public class Main
 			logger.severe("Not enough arguments, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
 		}
 		
-		// Start of Module Execution
-		try
+		// If test mode is enabled, do tests
+		if (test) 
 		{
-			msm = new MomentumStrategy(logger);
-			msm.selectTrades(sircaFile);
-			msm.calculateReturns();
-			msm.calculateMovingAverage(window);
-			msm.generateTradingSignals(threshold);
-			msm.generateOrders();
 			
-			logger.appendFooter(sircaFile.getName());
-		}
-		catch (Exception e)
+		} 
+		else 
 		{
-			logger.severe(e.getMessage());
+			// Start of Module Execution
+			try
+			{
+				msm = new MomentumStrategy(logger);
+				msm.selectTrades(sircaFile);
+				msm.calculateReturns();
+				msm.calculateMovingAverage(window);
+				msm.generateTradingSignals(threshold);
+				msm.generateOrders();
+				
+				logger.appendFooter(sircaFile.getName());
+			}
+			catch (Exception e)
+			{
+				logger.severe(e.getMessage());
+			}
 		}
 	}
 	
