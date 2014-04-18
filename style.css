@@ -29,6 +29,30 @@ h4
     font-weight: 400;
 }
 
+h5
+{
+    font-size: 2em;
+    font-style: italic;
+    font-family: 'Roboto Condensed';
+    font-weight: 300;
+    padding-left: 50px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+h10
+{
+    font-size: 1.6em;
+    font-style: italic;
+    font-family: 'Roboto Condensed';
+    font-weight: 800;
+    display: block;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    color: #1A0066;
+}
+
+
 h7
 {
     font-size: 4.3em;
@@ -36,6 +60,33 @@ h7
     font-family: 'Roboto Condensed';
     font-weight: 400;
 }
+
+
+h8
+{
+    font-size: 1.1em;
+	font-style: italic;
+    margin: 10px;
+    font-family: 'Roboto Condensed';
+    font-weight: 800;
+    display: block;
+}
+
+h9
+{
+    font-size: 2.9em;
+    font-style: normal;
+    font-family: 'Roboto Condensed';
+    font-weight: 400;
+}
+
+code
+{
+    font-size: 1em;
+    font-family: 'Roboto Slab';
+	text-decoration: underline;
+}
+
 
 #ducky
 {
@@ -137,7 +188,7 @@ a
 }
 #topProjects .top
 {
-    margin-top: -20px;
+    margin-top: 20px;
     display:inline-block;
     width: 400px;   
     padding: 20px; 
@@ -214,15 +265,4 @@ a
     float: left;
     padding-left: 20px;    
     padding-right: 20px;
-}
-
-h5
-{
-    font-size: 2em;
-    font-style: italic;
-    font-family: 'Roboto Condensed';
-    font-weight: 300;
-    padding-left: 50px;
-    margin-bottom: 10px;
-    margin-top: 30px;
 }

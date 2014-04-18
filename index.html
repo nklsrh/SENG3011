@@ -22,16 +22,92 @@
     <div id="topProjects">
 		<h6>Downloads</h6>
         <ul>
-            <div id="top1" class="top">
+            <div id="top2" class="top">
                 <li>
-                    <h4><strong>Version 1.0 </strong>(April 2nd, 2014)</h4>
-                    <a href="./website/v1/MSM.jar">
+                    <h9><strong>Version 2.0 </strong></h9>(April 17th, 2014)
+                    <a href="./website/v2/MSM_v2.jar">
                         <img src="./website/downloadJar.png">
                     </a>
                     <p style='font-size: 1.2em; font-weight: bold'>
-						<a style='text-decoration: none' href="./website/v1/MSM.jar">Java JAR Executable file (1.3 MB)</a>
+						<a style='text-decoration: none' href="./website/v2/MSM_v2.jar">Java JAR Executable file (8 KB)</a>
+                    <h4>Additional files</h4>
+						<ul style='margin-left: -20px; font-size: 1.2em;'>
+							<li>
+							<!-- <img style='height: 40px' src="./website/downloadJar.png"> <br> -->
+							<a href='./website/v2/inputFile.csv'><code>inputFile.csv</code></a>: the test input file with Sirca data
+							</li>
+							<li>
+							<!-- <img style='height: 40px' src="./website/downloadJar.png"> <br> -->
+							<a href='./website/v2/arguments.txt'><code>arguments.txt</code></a>: a sample parameters text file <small></small>
+							</li>
+						</ul>
 					</p>
-					Tested on <ul><li>Windows 7/8 64-bit</li><li>Mac OSX Mountain Lion</li></ul> <br>with Java 6 (64-bit) and Java 7 (32-bit/64-bit)
+					</p>
+					Tested on <ul><li>Windows 7/8 64-bit</li><li>Mac OSX Mountain Lion</li></ul> <br>with Java (JRE) 7 (32-bit/64-bit)
+                    <p>
+                </li>
+            </div>
+            <div id="top2" class="top">
+                <li>
+                    <h3>What's new in this release?</h3>
+                    <p>
+                    <h4>Implementation</h4>
+                        <p>
+                        <p>
+                        <h10>Input</h10>
+						Selects trade transactions from a list of transactions in the <code>inputFile.csv</code> file,
+						then calculates its return over time.
+                        </p>
+                        </p>
+                        Arguments from the <code>arguments.txt</code> file <a href='./website/v2/arguments.txt'>(sample)</a> are now utilised and must be specified, <strong>each on its own line</strong>.
+                        <p>
+                        <h8>(Line 1) Argument 1: Trade Window</h8>
+                        This is used to calculate the number of returns to be included in the calculation of the <strong>Simple Moving Average</strong>.
+                        </p>
+                        <p>
+                        <h8>(Line 2) Argument 2: Threshold</h8>
+                        This dictates the values at which to generate specific trading signals (buy/sell) based on the <strong>Simple Moving Average</strong>.
+                        </p>                        
+                        <p>
+                        <h10>Output</h10>
+                        A list of approved actions are saved to a new file called <code>OrderList.csv</code> <a href='./website/v2/OrderList.csv'>(sample)</a>. This indicates what equities should be bought or sold.
+                        </p>
+						The functions are logged and saved to a file called <code>MomentumStrategyModule.log</code>, a <a href='./website/v2/MomentumStrategyModule.log'>log report</a> containing details about the file (number of TRADES, LINES, execution time), which is saved to the working directory.
+					</p>
+                    <p>
+                    <h4>Updates</h4>
+						<strong>NEW:</strong> <i>MSM_v2 now takes arguments specified in the <code>arguments.txt</code> file. These arguments are 'window' and 'threshold'. <br><br>The <code>arguments.txt</code> file <strong>CANNOT</strong> be left blank!</i>
+						<br><br>
+                        <strong>NEW:</strong> <i>Performance optimisation resulting in a smaller footprint and memory usage. This was accomplished with extensive code refactoring and moving from a LinkedList-based system to an ArrayList system.</i>
+					</p>
+                </li>
+            </div>
+            <hr>
+            <div id="top1" class="top">
+                <li>
+                    <h9><strong>Version 1.0 </strong></h9>(April 2nd, 2014)
+                    <a href="./website/v1/MSM_v1.jar">
+                        <img src="./website/downloadJar.png">
+                    </a>
+                    <p style='font-size: 1.2em; font-weight: bold'>
+						<a style='text-decoration: none' href="./website/v1/MSM_v1.jar">Java JAR Executable file (1.3 MB)</a>
+					</p>
+                    <p>
+                    <h4>Additional files</h4>
+						<ul style='margin-left: -20px; font-size: 1.2em;'>
+							<li>
+							<!-- <img style='height: 40px' src="./website/downloadJar.png"> <br> -->
+							<a href='./website/v1/inputFile.csv'><code>inputFile.csv</code></a>: the test input file with Sirca data  
+							</li>
+							<li>
+							<!-- <img style='height: 40px' src="./website/downloadJar.png"> <br> -->
+							<a href='./website/v1/arguments.txt'><code>arguments.txt</code></a>: the parameters text file  <small>(currently empty)</small>
+							</li>
+						</ul>
+                        <p>
+                        <i style='font-size: 1em'> <strong>Note</strong>: As of v1.0, the module does not yet use params specified in <code>arguments.txt</code>, but the file is required to exist. </i> <br>
+                        </p>
+                    </p>
                 </li>
             </div>
             <div id="top1" class="top">
@@ -42,39 +118,14 @@
 						It selects trade transactions from a list of transactions in the CSV file,
 						then calculates its return over time. 
 						<br>
-						The functions are logged and saved to a file called <code>MomentumStrategyModule.log</code>, a log report containing details about the file (number of TRADES, LINES, execution time), which is saved to the working directory.
+						The functions are logged and saved to a file called <code>MomentumStrategyModule.log</code>, a <a href='./website/v1/MomentumStrategyModule.log'>log report</a> containing details about the file (number of TRADES, LINES, execution time), which is saved to the working directory.
 					</p>
                     <p>
                     <h4>Updates</h4>
 						<i>This is the first version.</i>
 					</p>
-                    <p>
-                    <h4>Additional files</h4>
-						<ul style='margin-left: -20px; font-size: 1.2em;'>
-							<li>
-							<!-- <img style='height: 40px' src="./website/downloadJar.png"> <br> -->
-							<a href='./website/v1/inputFile.csv'><code>inputFile.csv</code>, the test input file with Sirca data  </a>
-							</li>
-							<li>
-							<!-- <img style='height: 40px' src="./website/downloadJar.png"> <br> -->
-							<a href='./website/v1/arguments.txt'><code>arguments.txt</code>, the parameters text file </a> <small>(currently empty)</small>
-							</li>
-						</ul>
-					</p>
-					<i style='font-size: 1em'> <strong>Note</strong>: As of v1.0, the module does not yet use params specified in <code>arguments.txt</code>, but the file is required to exist. </i> <br>
                 </li>
             </div>
-           <!--  <div id="top2" class="top">
-                <li>
-                    <h4>Version 0.2</h4>
-                    <a href="#">
-                        <img src="http://d13yacurqjgara.cloudfront.net/users/171383/screenshots/1096466/paymark_vid_th5.png">
-                    </a>
-                        <p>
-							No file here either!
-                        </p>
-				</li>
-            </div> -->
         </ul>
 </div>
     <div id="description">
@@ -84,23 +135,23 @@
 				<li>1. Open cmd and go to the downloaded JAR's directory</li>						
 				<li>2. Type the following: 
 					<p>
-						<code>java -jar MSM.jar inputFile.csv arguments.txt</code>
+						<code>java -jar MSM_v2.jar inputFile.csv arguments.txt</code>
 						<p style='padding-left: 22px'>
 							Where <br>
 							<code>java -jar</code> is the function to run a JAR file <br>
-							<code>MSM.jar</code> is the program module to be run <br>
+							<code>MSM_v2.jar</code> is the program module to be run <br>
 							<code>inputFile.csv</code> is the input file <br>
 							<code>arguments.txt</code> is a text file which includes parameters needed for the module			
 						</p>
 					</p>
 				</li>
-				<li>3. The functions are logged and saved to a file called <code>MomentumStrategyModule.log</code> in the same directory.</li>	
+				<li>3. A log saved to a file <code>MomentumStrategyModule.log</code></li>	
+				<li>4. A list of approved actions are saved to a new file <code>OrderList.csv</code>. This indicates what equities should be bought or sold.</li>	
 			</ul>
-			<i style='font-size: 0.8em'> <strong>Note</strong>: The <code>arguments.txt</code> file can be left blank. </i> <br>
-			<i style='font-size: 0.8em'> <strong>Note</strong>: As of v1.0, the module does not yet use params specified in <code>arguments.txt</code>, but the file is required to exist </i> 	
+            <i style='font-size: 0.8em'> <strong>Note</strong>: As of v2.0, The <code>arguments.txt</code> file <strong>CANNOT</strong> be left blank. MSM now uses params specified in <code>arguments.txt</code> </i> <br>	
+			<i style='font-size: 0.8em'> <strong>Note</strong>: As of v1.0, the module does not yet use params specified in <code>arguments.txt</code>, but the file is required to exist </i>  <br>	
 		</p>
     </div>
-    <!--<small>Testing Nikhil Suresh's new webpage hosting. Go to <a href='http://nklsrh.tumblr.com'>nklsrh.tumblr.com</a> for my old 'website'. Cheers! </small>-->
     </div>
     <div id="latest">
         <h3>Who are we?</h3>
