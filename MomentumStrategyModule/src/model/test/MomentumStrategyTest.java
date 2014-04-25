@@ -43,7 +43,9 @@ public class MomentumStrategyTest {
 	// Column "S" in csv is returns.
 	public void testCalculateReturns() {
 		System.out.println(".............	Testing calculateReturns()		.............");
+		ArrayList<ArrayList<String>> trades = msm.getTrades();
 		msm.calculateReturns();
+		ArrayList<ArrayList<String>> newTrades = msm.getTrades();
 	}
 
 	// column "T" is average.

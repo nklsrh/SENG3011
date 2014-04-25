@@ -18,7 +18,7 @@ public class Main
 		File sircaFile = null;
 		double threshold = 0;
 		int window = 0;
-		boolean test = true;		// Change to false for normal function.
+		boolean test = false;		// Change to false for normal function.
 		
 		// Creating Log File
 		try { logger = new MyLogger(); }
