@@ -1,7 +1,5 @@
 package model.test;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,6 +7,8 @@ import java.util.ArrayList;
 
 import model.MomentumStrategy;
 import model.MyLogger;
+
+// Attach "-ea" to VM arguments to enable assertions
 
 public class MomentumStrategyTest {
 
@@ -56,7 +56,7 @@ public class MomentumStrategyTest {
 		ArrayList<ArrayList<String>> newTrades = msm.getTrades();
 		
 		for (int row = 0 ; row < newTrades.size() ; row++) {
-			double testReturn = Double.parseDouble(newTrades.get(row).get(newTrades.size()-1)); 
+			double testReturn = Double.parseDouble(newTrades.get(row).get(newTrades.size())); 
 			double calculatedReturn = 0.0;
 			
 			if (row != 0) {
@@ -64,20 +64,21 @@ public class MomentumStrategyTest {
 				double priceBefore = Double.parseDouble(trades.get(row-1).get(4));
 				calculatedReturn = (priceNow - priceBefore) / priceBefore;
 			}
-			if (row == 0) {
-				// both should be 0.0
+			// If both return values are 0, simply do equality check.
+			if (row == 0 || (calculatedReturn == 0.0 && testReturn == 0.0)) {
 				assert (calculatedReturn == testReturn)
 				: "Either test-calculated return "+ calculatedReturn +" or MSM return "+ testReturn +"is not 0!";
+			} else {
+				assert (Math.abs((calculatedReturn / testReturn) - 1.0) < epsilon) 
+				: "Row "+(row+1)+": test-calculated return: "+ calculatedReturn +" does not match MSM return: "+ testReturn +"!";
 			}
-			assert (Math.abs((calculatedReturn / testReturn) - 1.0) < epsilon) 
-			: "test-calculated return: "+ calculatedReturn +" does not match MSM return: "+ testReturn +"!";
 			
 			// Print test status
 			if (row % 5 == 0) {
 				System.out.println(".ok");
 			}
 			if (verbose) {
-				System.out.println("Row "+(row+1)+": ratio: "+Math.abs((calculatedReturn / testReturn) - 1)+" epsilon: "+epsilon);
+				System.out.println("Row "+(row+1)+": ratio: "+Math.abs((calculatedReturn / testReturn) - 1.0)+" epsilon: "+epsilon);
 				System.out.println("Row "+(row+1)+": test-calculated return: "+ calculatedReturn +" , MSM return: "+ testReturn);
 			}
 		}
@@ -86,15 +87,15 @@ public class MomentumStrategyTest {
 
 	// column "T" is average.
 	public void testCalculateMovingAverage() {
-		fail("Not yet implemented");
+		//TODO
 	}
 
 	public void testGenerateTradingSignals() {
-		fail("Not yet implemented");
+		//TODO
 	}
 
 	public void testGenerateOrders() {
-		fail("Not yet implemented");
+		//TODO
 	}
 
 }
