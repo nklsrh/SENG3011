@@ -75,6 +75,7 @@ public class Main
 			try {
 				MomentumStrategyTest tester = new MomentumStrategyTest(sircaFile);
 				tester.testSelectTrades();
+				tester.testCalculateReturns();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

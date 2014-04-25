@@ -14,6 +14,9 @@ public class MomentumStrategyTest {
 
 	private File sircaFile;
 	private MomentumStrategy msm;
+	private ArrayList<ArrayList<String>> trades;
+	private static final double epsilon = 0.001;
+	boolean verbose = true;
 	
 	public MomentumStrategyTest(File sircaFile) throws Exception {
 		this.sircaFile = sircaFile;
@@ -25,12 +28,17 @@ public class MomentumStrategyTest {
 		System.out.println(".............		Testing selectTrades()		.............");
 		try {
 			msm.selectTrades(sircaFile);
-			ArrayList<ArrayList<String>> trades = msm.getTrades();
+			trades = msm.getTrades();
 			
 			for (int i = 0 ; i < trades.size() ; i++) {
-				assert trades.get(i).get(3).equalsIgnoreCase("TRADE") : "Entry on line "+i+"is not a 'TRADE'!";
-				if (i % 20 == 0) {
-					System.out.println(".");
+				assert (trades.get(i).get(3).equalsIgnoreCase("TRADE")) : "Entry on line "+i+"is not a 'TRADE'!";
+				
+				// Print test status
+				if (i % 5 == 0) {
+					System.out.println(".ok");
+				}
+				if (verbose) {
+					System.out.println("Row "+(i+1)+": "+trades.get(i).get(3));
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -40,12 +48,40 @@ public class MomentumStrategyTest {
 		System.out.println(".............		selectTrades() is OK		.............");
 	}
 
-	// Column "S" in csv is returns.
+	// Column "S" in csv is returns. (does not get printed out)
+	// At this point, the field "trades" contains the arraylist of all rows categorised as trades.
 	public void testCalculateReturns() {
 		System.out.println(".............	Testing calculateReturns()		.............");
-		ArrayList<ArrayList<String>> trades = msm.getTrades();
 		msm.calculateReturns();
 		ArrayList<ArrayList<String>> newTrades = msm.getTrades();
+		
+		for (int row = 0 ; row < newTrades.size() ; row++) {
+			double testReturn = Double.parseDouble(newTrades.get(row).get(newTrades.size()-1)); 
+			double calculatedReturn = 0.0;
+			
+			if (row != 0) {
+				double priceNow = Double.parseDouble(trades.get(row).get(4));
+				double priceBefore = Double.parseDouble(trades.get(row-1).get(4));
+				calculatedReturn = (priceNow - priceBefore) / priceBefore;
+			}
+			if (row == 0) {
+				// both should be 0.0
+				assert (calculatedReturn == testReturn)
+				: "Either test-calculated return "+ calculatedReturn +" or MSM return "+ testReturn +"is not 0!";
+			}
+			assert (Math.abs((calculatedReturn / testReturn) - 1.0) < epsilon) 
+			: "test-calculated return: "+ calculatedReturn +" does not match MSM return: "+ testReturn +"!";
+			
+			// Print test status
+			if (row % 5 == 0) {
+				System.out.println(".ok");
+			}
+			if (verbose) {
+				System.out.println("Row "+(row+1)+": ratio: "+Math.abs((calculatedReturn / testReturn) - 1)+" epsilon: "+epsilon);
+				System.out.println("Row "+(row+1)+": test-calculated return: "+ calculatedReturn +" , MSM return: "+ testReturn);
+			}
+		}
+		System.out.println(".............		calculateReturns() is OK		.............");
 	}
 
 	// column "T" is average.

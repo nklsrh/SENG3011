@@ -196,7 +196,7 @@ public class MomentumStrategy
 	private void writeToCSV() throws IOException
 	{
 		FileWriter writer = new FileWriter(ORDER_FILE);
-		writer.append(",#Instrument,Date,Time,Record Type,Price,Volume,Undisclosed Volume,Value(Price X Volume),Qualifiers,Trans ID,Bid ID,Ask ID,Bid/Ask,Entry Time,Old Price,Old Volume,Buyer Broker ID,Seller Broker ID");
+		writer.append(",#Instrument,Date,Time,Record Type,Price,Volume,Undisclosed Volume,Value(Price X Volume),Qualifiers,Trans ID,Bid ID,Ask ID,Bid/Ask,Entry Time,Old Price,Old Volume,Buyer Broker ID,Seller Broker ID\n,");
 		
 		for (ArrayList<String> trade : trades) 
 		{
