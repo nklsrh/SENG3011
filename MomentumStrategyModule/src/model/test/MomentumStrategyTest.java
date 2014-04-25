@@ -87,7 +87,24 @@ public class MomentumStrategyTest {
 
 	// column "T" is average.
 	public void testCalculateMovingAverage() {
-		//TODO
+		System.out.println(".............	Testing calculateMovingAverage(3)	.............");
+		msm.calculateMovingAverage(3);
+		ArrayList<ArrayList<String>> newTrades = msm.getTrades();
+		double sumReturns = 0.0;
+		double calculatedMovingAverage = 0.0; 
+		
+		for (int row = 0 ; row < newTrades.size() ; row++) {
+			double testMovingAverage = Double.parseDouble(newTrades.get(row).get(newTrades.size()));
+			if ((row+1) >= 3) {
+				for (int i = row ; i > (row-2) ; i--) {
+					sumReturns += Double.parseDouble(newTrades.get(row).get(newTrades.size()-1));
+				}
+			}
+			calculatedMovingAverage = sumReturns / 3;
+			assert (Math.abs((calculatedMovingAverage / testMovingAverage) - 1.0) < epsilon) :
+			"Row "+(row+1)+": test-calculated Moving Average: "+ calculatedMovingAverage +
+			" does not match MSM Moving Average: "+ testMovingAverage +"!";
+		}
 	}
 
 	public void testGenerateTradingSignals() {
