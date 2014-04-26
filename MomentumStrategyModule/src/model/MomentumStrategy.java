@@ -154,7 +154,7 @@ public class MomentumStrategy
 				{
 					trades.get(t).set(12, "B");
 				}
-				else if (tsv < th)
+				else if (tsv < -th)		// Found bug here. used to be tsv < th
 				{
 					trades.get(t).set(12, "A");
 				}
