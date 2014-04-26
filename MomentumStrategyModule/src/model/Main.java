@@ -18,7 +18,7 @@ public class Main
 		File sircaFile = null;
 		double threshold = 0;
 		int window = 0;
-		boolean test = false;		// Change to false for normal function.
+		boolean test = true;		// Change to false for normal function.
 		
 		// Creating Log File
 		try { logger = new MyLogger(); }
@@ -80,6 +80,7 @@ public class Main
 				//tester.testCalculateMovingAverage(4); //Currently fails tests.
 				//tester.testCalculateMovingAverage(5);
 				tester.testGenerateTradingSignals(0.001);
+				tester.testGenerateTradingSignals(0.0001);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

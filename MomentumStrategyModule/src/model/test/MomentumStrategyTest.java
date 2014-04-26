@@ -57,7 +57,7 @@ public class MomentumStrategyTest {
 		ArrayList<ArrayList<String>> newTrades = msm.getTrades();
 		
 		for (int row = 0 ; row < newTrades.size() ; row++) {
-			double testReturn = Double.parseDouble(newTrades.get(row).get(newTrades.size())); 
+			double testReturn = Double.parseDouble(newTrades.get(row).get(newTrades.get(row).size()-1)); 
 			double calculatedReturn = 0.0;
 			
 			if (row != 0) {
@@ -92,7 +92,7 @@ public class MomentumStrategyTest {
 		msm.calculateMovingAverage(n);
 		ArrayList<ArrayList<String>> newTrades = msm.getTrades();
 		double sumReturns = 0.0;
-		double calculatedMovingAverage = 0.0; 
+		double calculatedMovingAverage = 0.0;
 		double testMovingAverage = 0.0;
 		//System.out.println("Size of my Trades list is "+newTrades.get(0).size());
 		
@@ -145,11 +145,50 @@ public class MomentumStrategyTest {
 		System.out.println(".............		calculateMovingAverage("+n+") is OK		.............");
 	}
 
-	public void testGenerateTradingSignals(int th) {
+	public void testGenerateTradingSignals(double th) {
 		System.out.println(".............	Testing generateTradingSignals("+th+")	.............");
 		msm.generateTradingSignals(th);
+		double smaNow = 0.0;
+		double smaBefore = 0.0;
+		double tsv = 0.0;
+		ArrayList<ArrayList<String>> newTrades = msm.getTrades();
+		//System.out.println(newTrades);
 		
-		
+		for (int row = 0 ; row < newTrades.size() ; row++) {
+			if (newTrades.get(row).get(19).equalsIgnoreCase("")) {
+				System.out.println("Skipped a line");
+				continue;
+			} else {
+				if (newTrades.get(row-1).get(19).equalsIgnoreCase("")) {
+					assert (newTrades.get(row).get(20).equalsIgnoreCase("UNDEFINED")) : 
+						"\nThe first Trade with a valid SMA should be 'UNDEFINED'!";
+				} else {
+					smaNow = Double.parseDouble(newTrades.get(row).get(19));
+					smaBefore = Double.parseDouble(newTrades.get(row-1).get(19));
+					tsv = smaNow - smaBefore;
+					System.out.println("Row "+(row+1)+
+						": tsv is "+tsv);
+					if (tsv > th) {
+						assert (newTrades.get(row).get(12).equalsIgnoreCase("B")) : 
+							"\nTSV is more than th but is not a BUY signal!";
+					} else if (tsv < -th) {
+						assert (newTrades.get(row).get(12).equalsIgnoreCase("A")) :
+							"\nTSV is less than -th but is not a SELL signal!";
+					} else {
+						assert (newTrades.get(row).get(12).equalsIgnoreCase("")) :
+							"\nTSV is not > th nor < -th, should be empty!";
+					}
+				}
+			}
+			// Print test status
+			if (row % 5 == 0) {
+			System.out.println(".ok");
+			}
+			if (verbose) {
+				System.out.println("***Row "+(row+1)+": "+ 
+					"TSV is "+tsv+", threshold is "+th+", Trade Signal is "+newTrades.get(row).get(12));
+			}
+		}
 		System.out.println(".............	generateTradingSignals("+th+") is OK	.............");
 	}
 
