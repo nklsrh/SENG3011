@@ -16,7 +16,7 @@ public class MomentumStrategyTest {
 	private MomentumStrategy msm;
 	private ArrayList<ArrayList<String>> trades;
 	private static final double epsilon = 0.001;
-	boolean verbose = true;
+	private boolean verbose = true;
 	
 	public MomentumStrategyTest(File sircaFile) throws Exception {
 		this.sircaFile = sircaFile;
@@ -31,7 +31,8 @@ public class MomentumStrategyTest {
 			trades = msm.getTrades();
 			
 			for (int i = 0 ; i < trades.size() ; i++) {
-				assert (trades.get(i).get(3).equalsIgnoreCase("TRADE")) : "Entry on line "+i+"is not a 'TRADE'!";
+				assert (trades.get(i).get(3).equalsIgnoreCase("TRADE")) : 
+					"\nEntry on line "+i+"is not a 'TRADE'!";
 				
 				// Print test status
 				if (i % 5 == 0) {
@@ -66,11 +67,11 @@ public class MomentumStrategyTest {
 			}
 			// If both return values are 0, simply do equality check.
 			if (row == 0 || (calculatedReturn == 0.0 && testReturn == 0.0)) {
-				assert (calculatedReturn == testReturn)
-				: "Either test-calculated return "+ calculatedReturn +" or MSM return "+ testReturn +"is not 0!";
+				assert (calculatedReturn == testReturn) : 
+					"\nEither test-calculated return "+ calculatedReturn +" or MSM return "+ testReturn +"is not 0!";
 			} else {
-				assert (Math.abs((calculatedReturn / testReturn) - 1.0) < epsilon) 
-				: "Row "+(row+1)+": test-calculated return: "+ calculatedReturn +" does not match MSM return: "+ testReturn +"!";
+				assert (Math.abs((calculatedReturn / testReturn) - 1.0) < epsilon) : 
+					"\nRow "+(row+1)+": test-calculated return: "+ calculatedReturn +" does not match MSM return: "+ testReturn +"!";
 			}
 			
 			// Print test status
@@ -82,33 +83,74 @@ public class MomentumStrategyTest {
 				System.out.println("Row "+(row+1)+": test-calculated return: "+ calculatedReturn +" , MSM return: "+ testReturn);
 			}
 		}
-		System.out.println(".............		calculateReturns() is OK		.............");
+		System.out.println(".............	calculateReturns() is OK	.............");
 	}
 
 	// column "T" is average.
-	public void testCalculateMovingAverage() {
-		System.out.println(".............	Testing calculateMovingAverage(3)	.............");
-		msm.calculateMovingAverage(3);
+	public void testCalculateMovingAverage(int n) {
+		System.out.println(".............	Testing calculateMovingAverage("+n+")	.............");
+		msm.calculateMovingAverage(n);
 		ArrayList<ArrayList<String>> newTrades = msm.getTrades();
 		double sumReturns = 0.0;
 		double calculatedMovingAverage = 0.0; 
+		double testMovingAverage = 0.0;
+		//System.out.println("Size of my Trades list is "+newTrades.get(0).size());
+		
+		// This is to allow repeated testing. Each instance of the test appends a column to the end of each row.
+		if (newTrades.get(0).size() > 20) {
+			for (ArrayList<String> row : newTrades) {
+				row.remove(19);
+			}
+		}
+		//System.out.println(newTrades);
 		
 		for (int row = 0 ; row < newTrades.size() ; row++) {
-			double testMovingAverage = Double.parseDouble(newTrades.get(row).get(newTrades.size()));
-			if ((row+1) >= 3) {
-				for (int i = row ; i > (row-2) ; i--) {
-					sumReturns += Double.parseDouble(newTrades.get(row).get(newTrades.size()-1));
+			sumReturns = 0.0;
+			if ((row+1) >= n) {
+				testMovingAverage = Double.parseDouble(newTrades.get(row).get(19));
+				for (int i = row ; i > (row-n) ; i--) {
+					if (i < (n-1)) {
+						continue;
+					} else {
+						sumReturns += Double.parseDouble(newTrades.get(i).get(18));
+					}
+					if (verbose) {
+						System.out.println("Row "+(row+1)+
+							", currently adding row "+(i+1)+
+							": current return is "+Double.parseDouble(newTrades.get(i).get(18))+
+							", current sumReturns is "+sumReturns);
+					}
 				}
 			}
 			calculatedMovingAverage = sumReturns / 3;
-			assert (Math.abs((calculatedMovingAverage / testMovingAverage) - 1.0) < epsilon) :
-			"Row "+(row+1)+": test-calculated Moving Average: "+ calculatedMovingAverage +
-			" does not match MSM Moving Average: "+ testMovingAverage +"!";
+			
+			if (calculatedMovingAverage == 0.0 && sumReturns == 0.0) {
+				assert (calculatedMovingAverage == sumReturns);
+			} else {
+				assert (Math.abs((calculatedMovingAverage / testMovingAverage) - 1.0) < epsilon) :
+					"\nRow "+(row+1)+": test-calculated Moving Average: "+ calculatedMovingAverage +
+					" does not match MSM Moving Average: "+ testMovingAverage +"!";
+			}
+			
+			// Print test status
+			if (row % 5 == 0) {
+			System.out.println(".ok");
+			}
+			if (verbose) {
+				System.out.println("***Row "+(row+1)+": "+ 
+					"calculatedMovingAverage: "+calculatedMovingAverage+
+					", MSMMovingAverage: "+testMovingAverage);
+			}
 		}
+		System.out.println(".............		calculateMovingAverage("+n+") is OK		.............");
 	}
 
-	public void testGenerateTradingSignals() {
-		//TODO
+	public void testGenerateTradingSignals(int th) {
+		System.out.println(".............	Testing generateTradingSignals("+th+")	.............");
+		msm.generateTradingSignals(th);
+		
+		
+		System.out.println(".............	generateTradingSignals("+th+") is OK	.............");
 	}
 
 	public void testGenerateOrders() {
