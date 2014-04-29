@@ -2,6 +2,7 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.NoSuchElementException;
 
@@ -14,6 +15,7 @@ public class Main
 	{
 		MyLogger logger;
 		MomentumStrategy msm;
+		ArrayList<ArrayList<String>> prominentTrades;
 		File argFile = null;
 		File sircaFile = null;
 		double threshold = 0;
@@ -78,8 +80,8 @@ public class Main
 				msm.selectTrades(sircaFile);
 				msm.calculateReturns();
 				msm.calculateMovingAverage(window);
-				msm.generateTradingSignals(threshold);
-				msm.generateOrders();
+				prominentTrades = msm.generateTradingSignals(threshold);
+				msm.generateOrders(prominentTrades);
 				
 				logger.appendFooter(sircaFile.getName());
 			}

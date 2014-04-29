@@ -140,9 +140,11 @@ public class MomentumStrategy
 	 * Else, Not defined ("NOTHING").
 	 * @param th
 	 */
-	public void generateTradingSignals(double th)
+	public ArrayList<ArrayList<String>> generateTradingSignals(double th)
 	{
 		logger.info("Generating Trading Signals with threshold of: " +th);
+		
+		ArrayList<ArrayList<String>> prominentTrades = new ArrayList<ArrayList<String>>();
 		
 		for (int t = 0; t < trades.size(); t++)
 		{
@@ -153,13 +155,16 @@ public class MomentumStrategy
 				if (tsv > th)
 				{
 					trades.get(t).set(12, "B");
+					prominentTrades.add(trades.get(t));
 				}
 				else if (tsv < -th)		// Found bug here. used to be tsv < th
 				{
 					trades.get(t).set(12, "A");
+					prominentTrades.add(trades.get(t));
 				}
 				else
 				{
+					// If tsv value is insignificant, REMOVE that row.
 					trades.get(t).add("NOTHING");
 				}
 			}
@@ -174,17 +179,18 @@ public class MomentumStrategy
 		}
 		
 		logger.info("Completed");
+		return prominentTrades;
 	}
 	
 	/**
 	 * Writes the trading signals from the above method to the CSV file.
 	 * @throws IOException
 	 */
-	public void generateOrders() throws IOException
+	public void generateOrders(ArrayList<ArrayList<String>> prominentTrades) throws IOException
 	{
 		logger.info("Generating Orders");
 		
-		writeToCSV();
+		writeToCSV(prominentTrades);
 		
 		logger.info("Completed");
 	}
@@ -193,12 +199,12 @@ public class MomentumStrategy
 	 * This method formats and writes the output trade data into a CSV file.
 	 * @throws IOException
 	 */
-	private void writeToCSV() throws IOException
+	private void writeToCSV(ArrayList<ArrayList<String>> prominentTrades) throws IOException
 	{
 		FileWriter writer = new FileWriter(ORDER_FILE);
 		writer.append(",#Instrument,Date,Time,Record Type,Price,Volume,Undisclosed Volume,Value(Price X Volume),Qualifiers,Trans ID,Bid ID,Ask ID,Bid/Ask,Entry Time,Old Price,Old Volume,Buyer Broker ID,Seller Broker ID\n,");
 		
-		for (ArrayList<String> trade : trades) 
+		for (ArrayList<String> trade : prominentTrades) 
 		{
 			for (int i = 0; i < 18; i++)
 			{
