@@ -191,9 +191,4 @@ public class MomentumStrategyTest {
 		}
 		System.out.println(".............	generateTradingSignals("+th+") is OK	.............");
 	}
-
-	public void testGenerateOrders() {
-		//TODO
-	}
-
 }
