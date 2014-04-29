@@ -186,7 +186,7 @@ public class MomentumStrategyTest {
 			}
 			if (verbose) {
 				System.out.println("***Row "+(row+1)+": "+ 
-					"TSV is "+tsv+", threshold is "+th+", Trade Signal is "+newTrades.get(row).get(12));
+					"TSV is "+tsv+", threshold is "+th+", Trade Signal is \""+newTrades.get(row).get(12)+"\"");
 			}
 		}
 		System.out.println(".............	generateTradingSignals("+th+") is OK	.............");

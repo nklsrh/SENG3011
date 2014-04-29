@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.NoSuchElementException;
 
-import model.test.MomentumStrategyTest;
+import model.test.*;
 
 public class Main
 {
@@ -18,7 +18,7 @@ public class Main
 		File sircaFile = null;
 		double threshold = 0;
 		int window = 0;
-		boolean test = true;		// Change to false for normal function.
+		boolean test = false;		// Change to false for normal function.
 		
 		// Creating Log File
 		try { logger = new MyLogger(); }
@@ -31,21 +31,7 @@ public class Main
 			argFile = new File(args[1]);
 			sircaFile = new File(args[0]);
 			
-			// Checking for valid file extension and path
-			if (sircaFile.isFile() && argFile.isFile())
-			{
-				String argFileExt = argFile.getName().substring(argFile.getName().lastIndexOf(".") + 1, argFile.getName().length());
-				String sircaFileExt = sircaFile.getName().substring(sircaFile.getName().lastIndexOf(".") + 1, sircaFile.getName().length());
-				
-				if (!argFileExt.equalsIgnoreCase("txt") || !sircaFileExt.equalsIgnoreCase("csv"))
-				{
-					logger.severe("Invalid arguments extension, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
-				}
-			}
-			else
-			{
-				logger.severe("Invalid path or files, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
-			}
+			checkExtensions(logger, sircaFile, argFile);
 			
 			// Getting parameter from argument file
 			try
@@ -66,6 +52,9 @@ public class Main
 		}
 		else
 		{
+			if (args.length == 4) {
+				
+			}
 			logger.severe("Not enough arguments, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
 		}
 		
@@ -73,14 +62,8 @@ public class Main
 		if (test) 
 		{
 			try {
-				MomentumStrategyTest tester = new MomentumStrategyTest(sircaFile);
-				tester.testSelectTrades();
-				tester.testCalculateReturns();
-				tester.testCalculateMovingAverage(3);
-				//tester.testCalculateMovingAverage(4); //Currently fails tests.
-				//tester.testCalculateMovingAverage(5);
-				tester.testGenerateTradingSignals(0.001);
-				tester.testGenerateTradingSignals(0.0001);
+				MainTest tester = new MainTest(sircaFile);
+				tester.startTests();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -104,6 +87,24 @@ public class Main
 			{
 				logger.severe(e.getMessage());
 			}
+		}
+	}	
+	
+	public static void checkExtensions(MyLogger logger, File sircaFile, File argFile) throws IOException {
+		// Checking for valid file extension and path
+		if (sircaFile.isFile() && argFile.isFile())
+		{
+			String argFileExt = argFile.getName().substring(argFile.getName().lastIndexOf(".") + 1, argFile.getName().length());
+			String sircaFileExt = sircaFile.getName().substring(sircaFile.getName().lastIndexOf(".") + 1, sircaFile.getName().length());
+			
+			if (!argFileExt.equalsIgnoreCase("txt") || !sircaFileExt.equalsIgnoreCase("csv"))
+			{
+				logger.severe("Invalid arguments extension, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
+			}
+		}
+		else
+		{
+			logger.severe("Invalid path or files, required arguments: SircaFile(.csv) ArgumentFile(.txt)");
 		}
 	}
 	
