@@ -191,6 +191,7 @@ public class MomentumStrategy
 		logger.info("Generating Orders");
 		
 		writeToCSV(prominentTrades);
+		countTrades(prominentTrades);
 		
 		logger.info("Completed");
 	}
@@ -226,6 +227,20 @@ public class MomentumStrategy
 		}
 		
 		writer.close();
+	}
+	
+	public void countTrades(ArrayList<ArrayList<String>> prominentTrades) {
+		int countA = 0;
+		int countB = 0;
+		
+		for (ArrayList<String> trade : prominentTrades) {
+			if (trade.get(12).equalsIgnoreCase("A")) {
+				countA++;
+			} else if (trade.get(12).equalsIgnoreCase("B")) {
+				countB++;
+			}
+		}
+		logger.info("There are "+countA+" ASK signals and "+countB+" BUY signals.");
 	}
 	
 	public ArrayList<ArrayList<String>> getTrades() 
