@@ -6,9 +6,9 @@ public class MainTest {
 	
 	private MomentumStrategyTest tester;
 	
-	public MainTest(File sircaFile) {
+	public MainTest(File sircaFile, boolean verbosity) {
 		try {
-			tester = new MomentumStrategyTest(sircaFile);
+			tester = new MomentumStrategyTest(sircaFile, verbosity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

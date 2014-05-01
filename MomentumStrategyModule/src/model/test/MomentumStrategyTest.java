@@ -16,10 +16,11 @@ public class MomentumStrategyTest {
 	private MomentumStrategy msm;
 	private ArrayList<ArrayList<String>> trades;
 	private static final double epsilon = 0.001;
-	private boolean verbose = true;
+	private boolean verbose = false;
 	
-	public MomentumStrategyTest(File sircaFile) throws Exception {
+	public MomentumStrategyTest(File sircaFile, boolean verbosity) throws Exception {
 		this.sircaFile = sircaFile;
+		verbose = verbosity;
 		msm = new MomentumStrategy(new MyLogger());
 	}
 
@@ -166,8 +167,10 @@ public class MomentumStrategyTest {
 					smaNow = Double.parseDouble(newTrades.get(row).get(19));
 					smaBefore = Double.parseDouble(newTrades.get(row-1).get(19));
 					tsv = smaNow - smaBefore;
-					System.out.println("Row "+(row+1)+
-						": tsv is "+tsv);
+					if (verbose) {
+						System.out.println("Row "+(row+1)+": tsv is "+tsv);
+					}
+					
 					if (tsv > th) {
 						assert (newTrades.get(row).get(12).equalsIgnoreCase("B")) : 
 							"\nTSV is more than th but is not a BUY signal!";
