@@ -186,16 +186,42 @@ public class MomentumStrategy
 	 * Writes the trading signals from the above method to the CSV file.
 	 * @throws IOException
 	 */
-	public void generateOrders(ArrayList<ArrayList<String>> prominentTrades) throws IOException
+	public ArrayList<ArrayList<String>> generateOrders(ArrayList<ArrayList<String>> prominentTrades) throws IOException
 	{
 		logger.info("Generating Orders");
 		
-		writeToCSV(prominentTrades);
-		countTrades(prominentTrades);
+		ArrayList<ArrayList<String>> generatedTrades = new ArrayList<ArrayList<String>>();
+		boolean foundB = false;
+		
+		for (int t = 0; t < prominentTrades.size(); t++)
+		{
+			if (prominentTrades.get(t).get(12).equalsIgnoreCase("B") && !foundB)
+			{
+				foundB = true;
+				generatedTrades.add(prominentTrades.get(t));
+			}
+			else if (prominentTrades.get(t).get(12).equalsIgnoreCase("A") && foundB)
+			{
+				foundB = false;
+				generatedTrades.add(prominentTrades.get(t));
+			}
+		}		
+		logger.info("Completed");
+		
+		return generatedTrades;
+	}
+
+	
+	public void generateOutput(ArrayList<ArrayList<String>> generatedTrades) throws IOException
+	{
+		logger.info("Generating CSV");
+		
+		writeToCSV(generatedTrades);
+		countTrades(generatedTrades);
 		
 		logger.info("Completed");
 	}
-
+	
 	/**
 	 * This method formats and writes the output trade data into a CSV file.
 	 * @throws IOException

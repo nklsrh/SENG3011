@@ -30,6 +30,7 @@ public class Main
 
 		// List of trades
 		ArrayList<ArrayList<String>> prominentTrades = null;
+		ArrayList<ArrayList<String>> generatedTrades = null;
 
 		// Files for Sirca and arguments
 		File argFile = null;
@@ -69,7 +70,7 @@ public class Main
 		// Otherwise, just run the module as normal
 		else 
 		{
-			executeModule(msm, logger, sircaFile, window, prominentTrades, threshold);
+			executeModule(msm, logger, sircaFile, window, prominentTrades, generatedTrades, threshold);
 		}
 	}	
 	
@@ -226,7 +227,8 @@ public class Main
 	 * @param threshold Threshold of function
 	 * @throws Exception
 	 */
-	public static void executeModule (MomentumStrategy msm, MyLogger logger, File sircaFile, int window, ArrayList<ArrayList<String>> prominentTrades, double threshold) throws Exception
+	public static void executeModule (MomentumStrategy msm, MyLogger logger, File sircaFile, int window, ArrayList<ArrayList<String>> prominentTrades, 
+									  ArrayList<ArrayList<String>> generatedTrades, double threshold) throws Exception
 	{
 		// Start of Module Execution
 		try
@@ -236,7 +238,8 @@ public class Main
 			msm.calculateReturns();
 			msm.calculateMovingAverage(window);
 			prominentTrades = msm.generateTradingSignals(threshold);
-			msm.generateOrders(prominentTrades);
+			generatedTrades = msm.generateOrders(prominentTrades);
+			msm.generateOutput(generatedTrades);
 			
 			logger.appendFooter(sircaFile.getName());
 		}
