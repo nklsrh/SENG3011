@@ -1,0 +1,9 @@
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\bin\Debug\MSM_Trader.exe.config
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\bin\Debug\MSM_Trader.exe
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\bin\Debug\MSM_Trader.pdb
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.Form1.resources
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.Properties.Resources.resources
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.csproj.GenerateResource.Cache
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.exe
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.pdb
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.csprojResolveAssemblyReference.cache
