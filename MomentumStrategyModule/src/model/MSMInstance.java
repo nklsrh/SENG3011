@@ -202,8 +202,14 @@ public class MSMInstance
 		try
 		{
 			Scanner sc = new Scanner(argFile);
-			window = Integer.parseInt(sc.next());
-			threshold = Double.parseDouble(sc.next());
+			//window = Integer.parseInt(sc.next());
+			//threshold = Double.parseDouble(sc.next());
+			sc.next();
+			if (sc.hasNextInt())
+				window = sc.nextInt();
+			sc.next();
+			if (sc.hasNextDouble()) 
+				threshold = sc.nextDouble();
 			sc.close();
 		}
 		catch (NoSuchElementException e)

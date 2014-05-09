@@ -1,2 +1,2 @@
-3
-0.0001
+window= 3
+threshold= 0.0001
