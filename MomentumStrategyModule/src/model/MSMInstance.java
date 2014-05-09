@@ -204,10 +204,10 @@ public class MSMInstance
 			Scanner sc = new Scanner(argFile);
 			//window = Integer.parseInt(sc.next());
 			//threshold = Double.parseDouble(sc.next());
-			sc.next();
+			sc.next("window=");
 			if (sc.hasNextInt())
 				window = sc.nextInt();
-			sc.next();
+			sc.next("threshold=");
 			if (sc.hasNextDouble()) 
 				threshold = sc.nextDouble();
 			sc.close();
