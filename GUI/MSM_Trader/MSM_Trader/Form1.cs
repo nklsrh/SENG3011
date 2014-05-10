@@ -388,7 +388,7 @@ namespace MSM_Trader
                 int exitCode = proc.ExitCode;
                 proc.Close();
 
-                ReadUpdateCSV(dataOutput, System.IO.Directory.GetCurrentDirectory() + "\\OrderList.csv", false);
+                ReadUpdateCSV(dataOutput, System.IO.Directory.GetCurrentDirectory() + "\\OrderList.csv", true);
                 tabs.SelectedIndex = 1;
 
                 return true;
