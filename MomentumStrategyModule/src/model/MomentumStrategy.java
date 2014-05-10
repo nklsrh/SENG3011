@@ -229,7 +229,7 @@ public class MomentumStrategy
 	private void writeToCSV(ArrayList<ArrayList<String>> prominentTrades) throws IOException
 	{
 		FileWriter writer = new FileWriter(ORDER_FILE);
-		writer.append(",#Instrument,Date,Time,Record Type,Price,Volume,Undisclosed Volume,Value(Price X Volume),Qualifiers,Trans ID,Bid ID,Ask ID,Bid/Ask,Entry Time,Old Price,Old Volume,Buyer Broker ID,Seller Broker ID\n,");
+		writer.write("#Instrument,Date,Time,Record Type,Price,Volume,Undisclosed Volume,Value(Price X Volume),Qualifiers,Trans ID,Bid ID,Ask ID,Bid/Ask,Entry Time,Old Price,Old Volume,Buyer Broker ID,Seller Broker ID\n");
 		
 		for (ArrayList<String> trade : prominentTrades) 
 		{
@@ -237,16 +237,20 @@ public class MomentumStrategy
 			{
 				if (i == 5)
 				{
-					writer.append("100,");
+					writer.write("100,");
 				}
 				else if (i == 7)
 				{
 					double value = 100 * Double.parseDouble(trade.get(4));
-					writer.append(Double.toString(value) +",");
+					writer.write(Double.toString(value) +",");
 				}
-				else
+				else if (i < 17)
+				{	
+					writer.write(trade.get(i) +",");
+				}
+				else 
 				{
-					writer.append(trade.get(i) +",");
+					writer.write(trade.get(i));
 				}
 			}
 			//writer.append("\n");
