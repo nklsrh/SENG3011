@@ -34,20 +34,23 @@
             this.tabOutput = new System.Windows.Forms.TabPage();
             this.dataOutput = new System.Windows.Forms.DataGridView();
             this.statusBar = new System.Windows.Forms.StatusStrip();
+            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnImport = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lstStrategy = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkAutoImport = new System.Windows.Forms.CheckBox();
+            this.btnFind = new System.Windows.Forms.Button();
             this.txtVal_Threshold = new System.Windows.Forms.TextBox();
             this.txtVal_Window = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.openFile = new System.Windows.Forms.OpenFileDialog();
-            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.chkAutoImport = new System.Windows.Forms.CheckBox();
+            this.openExecutable = new System.Windows.Forms.OpenFileDialog();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtLog = new System.Windows.Forms.TextBox();
             this.tabs.SuspendLayout();
             this.tabInput.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataInput)).BeginInit();
@@ -55,6 +58,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataOutput)).BeginInit();
             this.statusBar.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabs
@@ -62,8 +66,11 @@
             this.tabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabs.Appearance = System.Windows.Forms.TabAppearance.Buttons;
             this.tabs.Controls.Add(this.tabInput);
             this.tabs.Controls.Add(this.tabOutput);
+            this.tabs.Controls.Add(this.tabPage1);
+            this.tabs.Font = new System.Drawing.Font("Segoe WP", 10F);
             this.tabs.Location = new System.Drawing.Point(-1, 79);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
@@ -73,10 +80,10 @@
             // tabInput
             // 
             this.tabInput.Controls.Add(this.dataInput);
-            this.tabInput.Location = new System.Drawing.Point(4, 22);
+            this.tabInput.Location = new System.Drawing.Point(4, 29);
             this.tabInput.Name = "tabInput";
             this.tabInput.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInput.Size = new System.Drawing.Size(693, 420);
+            this.tabInput.Size = new System.Drawing.Size(693, 413);
             this.tabInput.TabIndex = 0;
             this.tabInput.Text = "Input";
             this.tabInput.UseVisualStyleBackColor = true;
@@ -88,16 +95,16 @@
             this.dataInput.Location = new System.Drawing.Point(3, 3);
             this.dataInput.Name = "dataInput";
             this.dataInput.RowTemplate.Height = 24;
-            this.dataInput.Size = new System.Drawing.Size(687, 414);
+            this.dataInput.Size = new System.Drawing.Size(687, 407);
             this.dataInput.TabIndex = 0;
             // 
             // tabOutput
             // 
             this.tabOutput.Controls.Add(this.dataOutput);
-            this.tabOutput.Location = new System.Drawing.Point(4, 22);
+            this.tabOutput.Location = new System.Drawing.Point(4, 29);
             this.tabOutput.Name = "tabOutput";
             this.tabOutput.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOutput.Size = new System.Drawing.Size(581, 414);
+            this.tabOutput.Size = new System.Drawing.Size(693, 413);
             this.tabOutput.TabIndex = 1;
             this.tabOutput.Text = "Output";
             this.tabOutput.UseVisualStyleBackColor = true;
@@ -109,7 +116,7 @@
             this.dataOutput.Location = new System.Drawing.Point(3, 3);
             this.dataOutput.Name = "dataOutput";
             this.dataOutput.RowTemplate.Height = 24;
-            this.dataOutput.Size = new System.Drawing.Size(575, 408);
+            this.dataOutput.Size = new System.Drawing.Size(687, 407);
             this.dataOutput.TabIndex = 1;
             // 
             // statusBar
@@ -122,10 +129,17 @@
             this.statusBar.TabIndex = 2;
             this.statusBar.Text = "statusStrip1";
             // 
+            // lblStatus
+            // 
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(163, 17);
+            this.lblStatus.Text = "Ready, waiting for file import.";
+            // 
             // btnImport
             // 
             this.btnImport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnImport.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnImport.Location = new System.Drawing.Point(7, 3);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(100, 33);
@@ -138,23 +152,27 @@
             // 
             this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnExport.Location = new System.Drawing.Point(606, 3);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(65, 56);
             this.btnExport.TabIndex = 1;
             this.btnExport.Text = "Export";
             this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Visible = false;
             // 
             // btnRun
             // 
             this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRun.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnRun.Location = new System.Drawing.Point(478, 3);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(74, 56);
             this.btnRun.TabIndex = 2;
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // label1
             // 
@@ -186,7 +204,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.panel1.Controls.Add(this.chkAutoImport);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.btnFind);
             this.panel1.Controls.Add(this.txtVal_Threshold);
             this.panel1.Controls.Add(this.txtVal_Window);
             this.panel1.Controls.Add(this.label3);
@@ -200,6 +218,30 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(701, 62);
             this.panel1.TabIndex = 0;
+            // 
+            // chkAutoImport
+            // 
+            this.chkAutoImport.AutoSize = true;
+            this.chkAutoImport.Location = new System.Drawing.Point(8, 40);
+            this.chkAutoImport.Name = "chkAutoImport";
+            this.chkAutoImport.Size = new System.Drawing.Size(99, 17);
+            this.chkAutoImport.TabIndex = 10;
+            this.chkAutoImport.Text = "Import on start";
+            this.chkAutoImport.UseVisualStyleBackColor = true;
+            this.chkAutoImport.CheckedChanged += new System.EventHandler(this.chkAutoImport_CheckedChanged);
+            // 
+            // btnFind
+            // 
+            this.btnFind.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnFind.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnFind.Location = new System.Drawing.Point(257, 3);
+            this.btnFind.Name = "btnFind";
+            this.btnFind.Size = new System.Drawing.Size(61, 56);
+            this.btnFind.TabIndex = 9;
+            this.btnFind.Text = "Find";
+            this.btnFind.UseVisualStyleBackColor = true;
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
             // 
             // txtVal_Threshold
             // 
@@ -248,33 +290,36 @@
             this.openFile.Filter = "Sirca CSV|*.csv";
             this.openFile.FileOk += new System.ComponentModel.CancelEventHandler(this.openFile_FileOk);
             // 
-            // lblStatus
+            // openExecutable
             // 
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(163, 17);
-            this.lblStatus.Text = "Ready, waiting for file import.";
+            this.openExecutable.DefaultExt = "csv";
+            this.openExecutable.FileName = "MSM";
+            this.openExecutable.Filter = "Java JAR|*.jar";
+            this.openExecutable.FileOk += new System.ComponentModel.CancelEventHandler(this.openExecutable_FileOk);
             // 
-            // button1
+            // tabPage1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(257, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(61, 56);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Find";
-            this.button1.UseVisualStyleBackColor = true;
+            this.tabPage1.Controls.Add(this.txtLog);
+            this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(693, 413);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Log";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // chkAutoImport
+            // txtLog
             // 
-            this.chkAutoImport.AutoSize = true;
-            this.chkAutoImport.Location = new System.Drawing.Point(8, 40);
-            this.chkAutoImport.Name = "chkAutoImport";
-            this.chkAutoImport.Size = new System.Drawing.Size(99, 17);
-            this.chkAutoImport.TabIndex = 10;
-            this.chkAutoImport.Text = "Import on start";
-            this.chkAutoImport.UseVisualStyleBackColor = true;
-            this.chkAutoImport.CheckedChanged += new System.EventHandler(this.chkAutoImport_CheckedChanged);
+            this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLog.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLog.Location = new System.Drawing.Point(3, 3);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.ReadOnly = true;
+            this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtLog.Size = new System.Drawing.Size(687, 407);
+            this.txtLog.TabIndex = 0;
+            this.txtLog.Text = "Run a Strategy to collect logs.";
             // 
             // Form1
             // 
@@ -296,6 +341,8 @@
             this.statusBar.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -321,8 +368,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.OpenFileDialog openFile;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox chkAutoImport;
+        private System.Windows.Forms.Button btnFind;
+        private System.Windows.Forms.OpenFileDialog openExecutable;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TextBox txtLog;
     }
 }
 
