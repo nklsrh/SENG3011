@@ -33,10 +33,12 @@
             this.dataInput = new System.Windows.Forms.DataGridView();
             this.tabOutput = new System.Windows.Forms.TabPage();
             this.dataOutput = new System.Windows.Forms.DataGridView();
+            this.tabLog = new System.Windows.Forms.TabPage();
+            this.txtLog = new System.Windows.Forms.TextBox();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnImport = new System.Windows.Forms.Button();
-            this.btnExport = new System.Windows.Forms.Button();
+            this.btnEvaluate = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lstStrategy = new System.Windows.Forms.ListBox();
@@ -49,16 +51,19 @@
             this.label2 = new System.Windows.Forms.Label();
             this.openFile = new System.Windows.Forms.OpenFileDialog();
             this.openExecutable = new System.Windows.Forms.OpenFileDialog();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.txtLog = new System.Windows.Forms.TextBox();
+            this.tabEvaluator = new System.Windows.Forms.TabPage();
+            this.txtEvaluation = new System.Windows.Forms.TextBox();
+            this.dataEvaluation = new System.Windows.Forms.DataGridView();
             this.tabs.SuspendLayout();
             this.tabInput.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataInput)).BeginInit();
             this.tabOutput.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataOutput)).BeginInit();
+            this.tabLog.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tabEvaluator.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataEvaluation)).BeginInit();
             this.SuspendLayout();
             // 
             // tabs
@@ -69,7 +74,8 @@
             this.tabs.Appearance = System.Windows.Forms.TabAppearance.Buttons;
             this.tabs.Controls.Add(this.tabInput);
             this.tabs.Controls.Add(this.tabOutput);
-            this.tabs.Controls.Add(this.tabPage1);
+            this.tabs.Controls.Add(this.tabLog);
+            this.tabs.Controls.Add(this.tabEvaluator);
             this.tabs.Font = new System.Drawing.Font("Segoe WP", 10F);
             this.tabs.Location = new System.Drawing.Point(-1, 79);
             this.tabs.Name = "tabs";
@@ -119,6 +125,30 @@
             this.dataOutput.Size = new System.Drawing.Size(687, 407);
             this.dataOutput.TabIndex = 1;
             // 
+            // tabLog
+            // 
+            this.tabLog.Controls.Add(this.txtLog);
+            this.tabLog.Location = new System.Drawing.Point(4, 29);
+            this.tabLog.Name = "tabLog";
+            this.tabLog.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLog.Size = new System.Drawing.Size(693, 413);
+            this.tabLog.TabIndex = 2;
+            this.tabLog.Text = "Log";
+            this.tabLog.UseVisualStyleBackColor = true;
+            // 
+            // txtLog
+            // 
+            this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLog.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLog.Location = new System.Drawing.Point(3, 3);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.ReadOnly = true;
+            this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtLog.Size = new System.Drawing.Size(687, 407);
+            this.txtLog.TabIndex = 0;
+            this.txtLog.Text = "Run a Strategy to collect logs.";
+            // 
             // statusBar
             // 
             this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -148,18 +178,19 @@
             this.btnImport.UseVisualStyleBackColor = true;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
-            // btnExport
+            // btnEvaluate
             // 
-            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.btnEvaluate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnExport.Location = new System.Drawing.Point(606, 3);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(65, 56);
-            this.btnExport.TabIndex = 1;
-            this.btnExport.Text = "Export";
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Visible = false;
+            this.btnEvaluate.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnEvaluate.Location = new System.Drawing.Point(606, 3);
+            this.btnEvaluate.Name = "btnEvaluate";
+            this.btnEvaluate.Size = new System.Drawing.Size(65, 56);
+            this.btnEvaluate.TabIndex = 1;
+            this.btnEvaluate.Text = "Evaluate";
+            this.btnEvaluate.UseVisualStyleBackColor = true;
+            this.btnEvaluate.Visible = false;
+            this.btnEvaluate.Click += new System.EventHandler(this.btnEvaluate_Click);
             // 
             // btnRun
             // 
@@ -170,7 +201,7 @@
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(74, 56);
             this.btnRun.TabIndex = 2;
-            this.btnRun.Text = "Run";
+            this.btnRun.Text = "Run + Evaluate";
             this.btnRun.UseVisualStyleBackColor = true;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
@@ -182,7 +213,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(177, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 13);
+            this.label1.Size = new System.Drawing.Size(69, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Find Strategy";
             // 
@@ -212,7 +243,7 @@
             this.panel1.Controls.Add(this.lstStrategy);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnRun);
-            this.panel1.Controls.Add(this.btnExport);
+            this.panel1.Controls.Add(this.btnEvaluate);
             this.panel1.Controls.Add(this.btnImport);
             this.panel1.Location = new System.Drawing.Point(-1, -1);
             this.panel1.Name = "panel1";
@@ -224,7 +255,7 @@
             this.chkAutoImport.AutoSize = true;
             this.chkAutoImport.Location = new System.Drawing.Point(8, 40);
             this.chkAutoImport.Name = "chkAutoImport";
-            this.chkAutoImport.Size = new System.Drawing.Size(99, 17);
+            this.chkAutoImport.Size = new System.Drawing.Size(93, 17);
             this.chkAutoImport.TabIndex = 10;
             this.chkAutoImport.Text = "Import on start";
             this.chkAutoImport.UseVisualStyleBackColor = true;
@@ -247,7 +278,7 @@
             // 
             this.txtVal_Threshold.Location = new System.Drawing.Point(385, 35);
             this.txtVal_Threshold.Name = "txtVal_Threshold";
-            this.txtVal_Threshold.Size = new System.Drawing.Size(87, 22);
+            this.txtVal_Threshold.Size = new System.Drawing.Size(87, 20);
             this.txtVal_Threshold.TabIndex = 8;
             this.txtVal_Threshold.Text = "0.001";
             // 
@@ -255,7 +286,7 @@
             // 
             this.txtVal_Window.Location = new System.Drawing.Point(385, 7);
             this.txtVal_Window.Name = "txtVal_Window";
-            this.txtVal_Window.Size = new System.Drawing.Size(87, 22);
+            this.txtVal_Window.Size = new System.Drawing.Size(87, 20);
             this.txtVal_Window.TabIndex = 7;
             this.txtVal_Window.Text = "3";
             // 
@@ -267,7 +298,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(324, 38);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 13);
+            this.label3.Size = new System.Drawing.Size(54, 13);
             this.label3.TabIndex = 6;
             this.label3.Text = "Threshold";
             // 
@@ -297,29 +328,42 @@
             this.openExecutable.Filter = "Java JAR|*.jar";
             this.openExecutable.FileOk += new System.ComponentModel.CancelEventHandler(this.openExecutable_FileOk);
             // 
-            // tabPage1
+            // tabEvaluator
             // 
-            this.tabPage1.Controls.Add(this.txtLog);
-            this.tabPage1.Location = new System.Drawing.Point(4, 29);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(693, 413);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "Log";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabEvaluator.Controls.Add(this.dataEvaluation);
+            this.tabEvaluator.Controls.Add(this.txtEvaluation);
+            this.tabEvaluator.Location = new System.Drawing.Point(4, 29);
+            this.tabEvaluator.Name = "tabEvaluator";
+            this.tabEvaluator.Size = new System.Drawing.Size(693, 413);
+            this.tabEvaluator.TabIndex = 3;
+            this.tabEvaluator.Text = "Evaluation";
+            this.tabEvaluator.UseVisualStyleBackColor = true;
             // 
-            // txtLog
+            // txtEvaluation
             // 
-            this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtLog.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLog.Location = new System.Drawing.Point(3, 3);
-            this.txtLog.Multiline = true;
-            this.txtLog.Name = "txtLog";
-            this.txtLog.ReadOnly = true;
-            this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLog.Size = new System.Drawing.Size(687, 407);
-            this.txtLog.TabIndex = 0;
-            this.txtLog.Text = "Run a Strategy to collect logs.";
+            this.txtEvaluation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEvaluation.Font = new System.Drawing.Font("Consolas", 8.75F);
+            this.txtEvaluation.Location = new System.Drawing.Point(266, 0);
+            this.txtEvaluation.Multiline = true;
+            this.txtEvaluation.Name = "txtEvaluation";
+            this.txtEvaluation.ReadOnly = true;
+            this.txtEvaluation.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtEvaluation.Size = new System.Drawing.Size(427, 413);
+            this.txtEvaluation.TabIndex = 1;
+            this.txtEvaluation.Text = "Run + Evaluate to find evaluations...";
+            // 
+            // dataEvaluation
+            // 
+            this.dataEvaluation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataEvaluation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataEvaluation.Location = new System.Drawing.Point(0, 0);
+            this.dataEvaluation.Name = "dataEvaluation";
+            this.dataEvaluation.RowTemplate.Height = 24;
+            this.dataEvaluation.Size = new System.Drawing.Size(260, 413);
+            this.dataEvaluation.TabIndex = 2;
             // 
             // Form1
             // 
@@ -330,19 +374,22 @@
             this.Controls.Add(this.tabs);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Rubber Ducky Trader";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabs.ResumeLayout(false);
             this.tabInput.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataInput)).EndInit();
             this.tabOutput.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataOutput)).EndInit();
+            this.tabLog.ResumeLayout(false);
+            this.tabLog.PerformLayout();
             this.statusBar.ResumeLayout(false);
             this.statusBar.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.tabEvaluator.ResumeLayout(false);
+            this.tabEvaluator.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataEvaluation)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -357,7 +404,7 @@
         private System.Windows.Forms.DataGridView dataOutput;
         private System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.Button btnImport;
-        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnEvaluate;
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox lstStrategy;
@@ -371,8 +418,11 @@
         private System.Windows.Forms.CheckBox chkAutoImport;
         private System.Windows.Forms.Button btnFind;
         private System.Windows.Forms.OpenFileDialog openExecutable;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabLog;
         private System.Windows.Forms.TextBox txtLog;
+        private System.Windows.Forms.TabPage tabEvaluator;
+        private System.Windows.Forms.TextBox txtEvaluation;
+        private System.Windows.Forms.DataGridView dataEvaluation;
     }
 }
 

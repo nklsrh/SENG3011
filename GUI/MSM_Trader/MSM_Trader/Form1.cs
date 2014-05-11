@@ -25,6 +25,10 @@ namespace MSM_Trader
         public string executableURL;
         public string executableArguments;
 
+        public string evaluatorURL;
+
+        public string version = "0.4";
+
         public string threshold;
         public string window;
         
@@ -44,6 +48,8 @@ namespace MSM_Trader
                 if (importOnStart)
                 {
                     OpenCSV(dataInput, inputFileName);
+                    ReadLog();
+                    ReadEvaluation();
                 }
             }
             else
@@ -64,6 +70,8 @@ namespace MSM_Trader
                 {
                     System.IO.StreamReader fileReader = new System.IO.StreamReader(settingsFile, false);
 
+                    bool writeSettingsAfter = true;
+
                     lblStatus.Text = "Reading settings file.";
                     int lineNumber = 0;
                     //Reading Data
@@ -81,11 +89,18 @@ namespace MSM_Trader
                                     executableURL = fileDataField[1];
                                 }
                             }
-                            if (fileDataField[0] == "argumentsFile")
+                            else if (fileDataField[0] == "argumentsFile")
                             {
                                 if (fileDataField[1].Substring(fileDataField[1].Length - 3, 3) == "txt")
                                 {
                                     executableArguments = fileDataField[1];
+                                }
+                            }
+                            else if (fileDataField[0] == "evaluatorExecutable")
+                            {
+                                if (fileDataField[1].Substring(fileDataField[1].Length - 3, 3) == "jar")
+                                {
+                                    evaluatorURL = fileDataField[1];
                                 }
                             }
                             else if (fileDataField[0] == "inputCSVFile")
@@ -108,11 +123,30 @@ namespace MSM_Trader
                                 importOnStart = fileDataField[1] == "True";
                                 chkAutoImport.Checked = importOnStart;
                             }
+                            else if (fileDataField[0] == "version")
+                            {
+                                if (Convert.ToDouble(version) > Convert.ToDouble(fileDataField[1]))
+                                {
+                                    version = fileDataField[1];
+                                    writeSettingsAfter = true;
+                                }
+                                else
+                                {
+                                    writeSettingsAfter = false;
+                                }
+                            }
                         }
                         lineNumber++;
                     }
                     fileReader.Dispose();
                     fileReader.Close();
+
+                    evaluatorURL = System.IO.Directory.GetCurrentDirectory() + "\\Evaluator.jar";
+
+                    if (writeSettingsAfter)
+                    {
+                        WriteSettingsFile();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -133,10 +167,12 @@ namespace MSM_Trader
                 System.IO.StreamWriter fileWriter = new System.IO.StreamWriter(settingsFile, false);
                 fileWriter.WriteLine("tradingStrategyExecutable=" + executableURL);
                 fileWriter.WriteLine("argumentsFile=" + executableArguments);
+                fileWriter.WriteLine("evaluatorExecutable=" + evaluatorURL);
                 fileWriter.WriteLine("inputCSVFile=" + inputFileURL);
                 fileWriter.WriteLine("threshold=" + threshold);
                 fileWriter.WriteLine("window=" + window);
                 fileWriter.WriteLine("importOnStart=" + importOnStart);
+                fileWriter.WriteLine("version=" + version);
                 fileWriter.Dispose();
                 fileWriter.Close();
             }
@@ -166,7 +202,7 @@ namespace MSM_Trader
 
         public void SetInputFile()
         {
-            this.Text = inputFileName;
+            this.Text = inputFileName + " - Rubber Ducky Trader";
 
             OpenCSV(dataInput, inputFileURL);
         }
@@ -279,7 +315,7 @@ namespace MSM_Trader
                 case GUI_Steps.Import:
                     btnFind.Enabled = false;
                     btnRun.Enabled = false;
-                    btnExport.Enabled = false;
+                    btnEvaluate.Enabled = false;
                     txtVal_Threshold.Enabled = false;
                     txtVal_Window.Enabled = false;
                     lstStrategy.Enabled = false;
@@ -287,7 +323,7 @@ namespace MSM_Trader
                 case GUI_Steps.Find:
                     btnFind.Enabled = true;
                     btnRun.Enabled = false;
-                    btnExport.Enabled = false;
+                    btnEvaluate.Enabled = false;
                     txtVal_Threshold.Enabled = false;
                     txtVal_Window.Enabled = false;
                     lstStrategy.Enabled = true;
@@ -295,7 +331,7 @@ namespace MSM_Trader
                 case GUI_Steps.Run:
                     btnFind.Enabled = true;
                     btnRun.Enabled = true;
-                    btnExport.Enabled = false;
+                    btnEvaluate.Enabled = false;
                     txtVal_Threshold.Enabled = true;
                     txtVal_Window.Enabled = true;
                     lstStrategy.Enabled = true;
@@ -303,7 +339,7 @@ namespace MSM_Trader
                 case GUI_Steps.Export:
                     btnFind.Enabled = true;
                     btnRun.Enabled = true;
-                    btnExport.Enabled = true;
+                    btnEvaluate.Enabled = true;
                     txtVal_Threshold.Enabled = true;
                     txtVal_Window.Enabled = true;
                     lstStrategy.Enabled = true;
@@ -313,7 +349,7 @@ namespace MSM_Trader
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            if (UpdateArgumentsTXT() && Run_MSM())
+            if (UpdateArgumentsTXT() && Run_MSM() && Run_Evaluator())
             {
                 WriteSettingsFile();
                 EnableDisableUIElements(GUI_Steps.Export);
@@ -371,6 +407,7 @@ namespace MSM_Trader
         public bool Run_MSM()
         {
             lblStatus.Text = "Running Strategy from " + System.IO.Path.GetFileName(executableURL);
+            string errorSpecific = "Couldn't find Java, or arguments.txt, or MSM.jar";
             try
             {
                 ProcessStartInfo processInfo = new ProcessStartInfo("java", "-jar " + executableURL + " " + inputFileURL + " " + executableArguments)
@@ -387,6 +424,8 @@ namespace MSM_Trader
                 proc.WaitForExit();
                 int exitCode = proc.ExitCode;
                 proc.Close();
+                
+                errorSpecific = "Error with OrderList.csv";
 
                 ReadUpdateCSV(dataOutput, System.IO.Directory.GetCurrentDirectory() + "\\OrderList.csv", true);
                 tabs.SelectedIndex = 1;
@@ -395,11 +434,74 @@ namespace MSM_Trader
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(errorSpecific + "\r\n" + ex.Message);
                 return false;
             }
         }
 
+        public bool Run_Evaluator()
+        {
+            lblStatus.Text = "Evaluating using " + System.IO.Path.GetFileName(evaluatorURL);
+            string errorSpecific = "Couldn't find Evaluator, or Java isn't installed.";
+            try
+            {
+                ProcessStartInfo processInfo = new ProcessStartInfo("java", "-jar " + evaluatorURL + " OrderList.csv")
+                {
+                    CreateNoWindow = true,
+                    UseShellExecute = true
+                };
+                Process proc;
+
+                if ((proc = Process.Start(processInfo)) == null)
+                {
+                    throw new InvalidOperationException("??");
+                }
+                proc.WaitForExit();
+                int exitCode = proc.ExitCode;
+                proc.Close();
+
+                ReadEvaluation();
+                tabs.SelectedIndex = 2;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(errorSpecific + "\r\n" + ex.Message);
+                return false;
+            }
+        }
+
+        public void ReadEvaluation()
+        {
+            string evaluationFile = System.IO.Directory.GetCurrentDirectory() + "\\eval.txt";
+            if (System.IO.File.Exists(evaluationFile))
+            {
+                try
+                {
+                    System.IO.StreamReader fileReader = new System.IO.StreamReader(evaluationFile, true);
+
+                    lblStatus.Text = "Reading Evaluation file.";
+
+                    while (fileReader.Peek() != -1)
+                    {
+                        txtEvaluation.Text = fileReader.ReadLine() + "\r\n" + txtEvaluation.Text;
+                    }
+                    fileReader.Dispose();
+                    fileReader.Close();
+
+                    txtEvaluation.SelectionStart = txtEvaluation.Text.Length - 1;
+                }
+                finally
+                {
+                    lblStatus.Text = "Completed. Read evaluations in the Evaluation tab.";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Couldn't find evaluation file.");
+            }
+        }
 
         // some bullshit function thats supposed to find java path 
         // but it doesnt work
@@ -420,6 +522,11 @@ namespace MSM_Trader
                     return null;
                 }
             }
+        }
+
+        private void btnEvaluate_Click(object sender, EventArgs e)
+        {
+
         }
 
     }
