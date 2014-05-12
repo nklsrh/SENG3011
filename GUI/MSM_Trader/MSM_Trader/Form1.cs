@@ -57,10 +57,11 @@ namespace MSM_Trader
             }
             else
             {
-                executableURL = "";
-                executableArguments = "";
-                threshold = "0.01";
-                window = "3";
+                executableURL = System.IO.Directory.GetCurrentDirectory() + "\\MSM_v4.jar";
+                executableArguments = System.IO.Directory.GetCurrentDirectory() + "\\arguments.txt";
+                evaluatorURL = System.IO.Directory.GetCurrentDirectory() + "\\Evaluator.jar";
+                threshold = "0.0001";
+                window = "2";
                 WriteSettingsFile();
             }
         }
@@ -348,10 +349,10 @@ namespace MSM_Trader
                     break;
                 case GUI_Steps.Find:
                     btnFind.Enabled = true;
-                    btnRun.Enabled = false;
+                    btnRun.Enabled = true;
                     btnEvaluate.Enabled = false;
-                    txtVal_Threshold.Enabled = false;
-                    txtVal_Window.Enabled = false;
+                    txtVal_Threshold.Enabled = true;
+                    txtVal_Window.Enabled = true;
                     lstStrategy.Enabled = true;
                     break;
                 case GUI_Steps.Run:
