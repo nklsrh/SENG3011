@@ -13,6 +13,7 @@ public class Main {
 	static ArrayList<String> buysells;
 	static double result;
 	static int counter;
+	static int printCounter;
 	
 	/**
 	 * @param args
@@ -24,6 +25,7 @@ public class Main {
 		buysells = new ArrayList<String>();
 		result = 0.0;
 		counter = 0;
+		printCounter = 0;
 		
 		if (args.length == 1) {
 			File inputFile = new File(args[0]);
@@ -53,25 +55,27 @@ public class Main {
 			
 			while (prices.size() > 1) {
 				if (buysells.get(0).equalsIgnoreCase("B")) {
+					printCounter++;
 					double buyPrice = prices.get(0);
 					int index = buysells.indexOf("A");
 					double sellPrice = prices.get(index);
 					double temp = (sellPrice - buyPrice) / buyPrice;
 					returns.add(temp);
 					temp = temp * 100;
-					writer.write("Bought @ " + buyPrice + ", sold @ " + sellPrice + ", return: " + df.format(temp) + "%" + System.getProperty( "line.separator" ));
+					writer.write(printCounter + " Bought " + buyPrice + " Sold " + sellPrice + " Return " + df.format(temp) + "%" + System.getProperty( "line.separator" ));
 					prices.remove(index);
 					prices.remove(0);
 					buysells.remove(index);
 					buysells.remove(0);
 				} else {
+					printCounter++;
 					double sellPrice = prices.get(0);
 					int index = buysells.indexOf("B");
 					double buyPrice = prices.get(index);
 					double temp = (sellPrice - buyPrice) / sellPrice;
 					returns.add(temp);
 					temp = temp * 100;
-					writer.write("Sold @ " + sellPrice + ", bought @ " + buyPrice + ", return: " + df.format(temp) + "%" + System.getProperty( "line.separator" ));
+					writer.write(printCounter + "Sold " + sellPrice + " Bought " + buyPrice + " Return " + df.format(temp) + "%" + System.getProperty( "line.separator" ));
 					prices.remove(index);
 					prices.remove(0);
 					buysells.remove(index);
@@ -83,7 +87,7 @@ public class Main {
 				result += indReturns;
 			}
 			result = result * 100;
-			writer.write("Final return of given order list: " + df.format(result) + "%");
+			writer.write("Final return: " + df.format(result) + "%\n");
 			System.out.println("Successfully calculated returns.");
 			writer.close();
 		} else {
