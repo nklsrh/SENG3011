@@ -1,0 +1,3 @@
+Parameters passed in: trading_threshold=0; moving_average_window=2
+Processed 100226 records; stored 16485 TRADE records.
+Took 630ms

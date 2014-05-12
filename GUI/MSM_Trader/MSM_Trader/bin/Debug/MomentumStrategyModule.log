@@ -1,23 +1,4 @@
-Fire Breathing Rubber Duckies
-Momentum Strategy Module - Version 1.1
 
-11-May-2014 18:46:18	INFO: Selecting Trades
-11-May-2014 18:46:19	INFO: Completed with 16485 Trades selected from 100227 lines
-11-May-2014 18:46:19	INFO: Calculating Returns
-11-May-2014 18:46:19	INFO: Completed
-11-May-2014 18:46:19	INFO: Calculating Moving Average with window parameter of: 2
-11-May-2014 18:46:19	INFO: Completed
-11-May-2014 18:46:19	INFO: Generating Trading Signals with threshold of: 1.0E-4
-11-May-2014 18:46:19	INFO: Completed
-11-May-2014 18:46:19	INFO: Generating Orders
-11-May-2014 18:46:19	INFO: Completed
-11-May-2014 18:46:19	INFO: Generating CSV
-11-May-2014 18:46:19	INFO: There are 793 ASK signals and 794 BUY signals.
-11-May-2014 18:46:19	INFO: Completed
-
-Status              : Completed without error
-Start time          : 11-May-2014 18:46:18
-End time            : 11-May-2014 18:46:19
-Elapsed time        : 942 ms
-Input file          : sirca.csv
-Output produced     : OrderList.csv MomentumStrategyModule.log
+Parameters passed in: trading_threshold=0; moving_average_window=2
+Processed 100226 records; stored 16485 TRADE records.
+Took 498ms

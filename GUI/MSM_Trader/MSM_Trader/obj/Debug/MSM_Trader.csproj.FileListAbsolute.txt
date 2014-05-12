@@ -7,3 +7,4 @@ C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trade
 C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.exe
 C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.pdb
 C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.csprojResolveAssemblyReference.cache
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\bin\Debug\System.Windows.Forms.Ribbon35.dll

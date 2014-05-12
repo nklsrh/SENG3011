@@ -27,7 +27,9 @@ namespace MSM_Trader
 
         public string evaluatorURL;
 
-        public string version = "0.4";
+        public string version = "0.5";
+
+        public Strategy strategy = Strategy.RubberDucky;
 
         public string threshold;
         public string window;
@@ -41,6 +43,7 @@ namespace MSM_Trader
             openFile.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
 
             EnableDisableUIElements(GUI_Steps.Import);
+            lstStrategy.SelectedIndex = 0;
 
             if (LoadSettingsFile())
             {
@@ -284,6 +287,29 @@ namespace MSM_Trader
             WriteSettingsFile();
         }
 
+        public enum Strategy
+        {
+            RubberDucky,
+            Actuators
+        }
+
+        private void lstStrategy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (lstStrategy.SelectedIndex)
+            {
+                case 0:
+                    SwitchStrategy(Strategy.RubberDucky);
+                    break;
+                case 1:
+                    SwitchStrategy(Strategy.Actuators);
+                    break;
+            }
+        }
+
+        public void SwitchStrategy (Strategy newStrategy)
+        {
+            strategy = newStrategy;
+        }
 
         private void btnFind_Click(object sender, EventArgs e)
         {
@@ -349,7 +375,29 @@ namespace MSM_Trader
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+            switch (strategy)
+            { 
+                case Strategy.RubberDucky:
+                    RunStrategy_RubberDucky();
+                    break;
+                case Strategy.Actuators:
+                    RunStrategy_Actuators();
+                    break;
+            }
+        }
+
+        void RunStrategy_RubberDucky()
+        {
             if (UpdateArgumentsTXT() && Run_MSM() && Run_Evaluator())
+            {
+                WriteSettingsFile();
+                EnableDisableUIElements(GUI_Steps.Export);
+                ReadLog();
+            }
+        }
+        void RunStrategy_Actuators()
+        {
+            if (UpdateArgumentsTXT_Actuators() && Run_MSM_Actuators() && Run_Evaluator())
             {
                 WriteSettingsFile();
                 EnableDisableUIElements(GUI_Steps.Export);
@@ -366,7 +414,10 @@ namespace MSM_Trader
                     System.IO.StreamReader fileReader = new System.IO.StreamReader(System.IO.Path.GetDirectoryName(executableURL) + "\\MomentumStrategyModule.log", true);
 
                     lblStatus.Text = "Reading log file.";
-
+                    txtLog.Text = "----------------------------------- -------- ----------------------------\r\n\r\n\r\n" + txtLog.Text;
+                    txtLog.Text = "----------------------------------- NEW LOGS ----------------------------\r\n" + txtLog.Text;
+                    txtLog.Text = "\r\n----------------------------------- -------- ----------------------------\r\n" + txtLog.Text;
+                   
                     while (fileReader.Peek() != -1)
                     {
                         txtLog.Text = fileReader.ReadLine() + "\r\n" + txtLog.Text;
@@ -403,11 +454,33 @@ namespace MSM_Trader
             return true;
         }
 
+        public bool UpdateArgumentsTXT_Actuators()
+        {
+            window = txtVal_Window.Text;
+            threshold = txtVal_Threshold.Text;
+            try
+            {
+                System.IO.StreamWriter fileWriter = new System.IO.StreamWriter(executableArguments, false);
+                fileWriter.WriteLine("" + threshold);
+                fileWriter.WriteLine("" + window);
+                fileWriter.Dispose();
+                fileWriter.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+            return true;
+        }
 
         public bool Run_MSM()
         {
-            lblStatus.Text = "Running Strategy from " + System.IO.Path.GetFileName(executableURL);
+            lblStatus.Text = "Running Rubber Ducky Strategy";
             string errorSpecific = "Couldn't find Java, or arguments.txt, or MSM.jar";
+
+            ClearLogFile();
+
             try
             {
                 ProcessStartInfo processInfo = new ProcessStartInfo("java", "-jar " + executableURL + " " + inputFileURL + " " + executableArguments)
@@ -425,6 +498,44 @@ namespace MSM_Trader
                 int exitCode = proc.ExitCode;
                 proc.Close();
                 
+                errorSpecific = "Error with OrderList.csv";
+
+                ReadUpdateCSV(dataOutput, System.IO.Directory.GetCurrentDirectory() + "\\OrderList.csv", true);
+                tabs.SelectedIndex = 1;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(errorSpecific + "\r\n" + ex.Message);
+                return false;
+            }
+        }
+
+        public bool Run_MSM_Actuators()
+        {
+            lblStatus.Text = "Running Actuators Strategy";
+            string errorSpecific = "Couldn't find Java, or arguments.txt, or MSM.jar";
+
+            ClearLogFile();
+
+            try
+            {
+                ProcessStartInfo processInfo = new ProcessStartInfo("java", "-jar " + System.IO.Directory.GetCurrentDirectory() + "\\MSM_Actuators.jar" + " " + inputFileURL + " " + executableArguments + " MomentumStrategyModule.log OrderList.csv")
+                {
+                    CreateNoWindow = true,
+                    UseShellExecute = true
+                };
+                Process proc;
+
+                if ((proc = Process.Start(processInfo)) == null)
+                {
+                    throw new InvalidOperationException("??");
+                }
+                proc.WaitForExit();
+                int exitCode = proc.ExitCode;
+                proc.Close();
+
                 errorSpecific = "Error with OrderList.csv";
 
                 ReadUpdateCSV(dataOutput, System.IO.Directory.GetCurrentDirectory() + "\\OrderList.csv", true);
@@ -482,7 +593,7 @@ namespace MSM_Trader
                     System.IO.StreamReader fileReader = new System.IO.StreamReader(evaluationFile, true);
 
                     lblStatus.Text = "Reading Evaluation file.";
-
+                    txtEvaluation.Text = "";
                     while (fileReader.Peek() != -1)
                     {
                         txtEvaluation.Text = fileReader.ReadLine() + "\r\n" + txtEvaluation.Text;
@@ -502,6 +613,27 @@ namespace MSM_Trader
                 MessageBox.Show("Couldn't find evaluation file.");
             }
         }
+
+
+        public void ClearLogFile()
+        {
+            if (System.IO.File.Exists(settingsFile))
+            {
+                try
+                {
+                    System.IO.StreamWriter fileWriter = new System.IO.StreamWriter(System.IO.Path.GetDirectoryName(executableURL) + "\\MomentumStrategyModule.log", false);
+                    fileWriter.WriteLine("");
+                    fileWriter.Dispose();
+                    fileWriter.Close();
+                }
+                finally {}
+            }
+        }
+
+
+
+
+
 
         // some bullshit function thats supposed to find java path 
         // but it doesnt work
@@ -528,6 +660,7 @@ namespace MSM_Trader
         {
 
         }
+
 
     }
 }
