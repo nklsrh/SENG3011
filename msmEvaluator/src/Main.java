@@ -59,7 +59,7 @@ public class Main {
 					double temp = (sellPrice - buyPrice) / buyPrice;
 					returns.add(temp);
 					temp = temp * 100;
-					writer.write("Bought first at " + buyPrice + " and sold at " + sellPrice + " with a return of " + df.format(temp) + "%" + System.getProperty( "line.separator" ));
+					writer.write("Bought @ " + buyPrice + ", sold @ " + sellPrice + ", return: " + df.format(temp) + "%" + System.getProperty( "line.separator" ));
 					prices.remove(index);
 					prices.remove(0);
 					buysells.remove(index);
@@ -71,7 +71,7 @@ public class Main {
 					double temp = (sellPrice - buyPrice) / sellPrice;
 					returns.add(temp);
 					temp = temp * 100;
-					writer.write("Sold first at " + sellPrice + " and bought at " + buyPrice + " with a return of " + df.format(temp) + "%" + System.getProperty( "line.separator" ));
+					writer.write("Sold @ " + sellPrice + ", bought @ " + buyPrice + ", return: " + df.format(temp) + "%" + System.getProperty( "line.separator" ));
 					prices.remove(index);
 					prices.remove(0);
 					buysells.remove(index);
