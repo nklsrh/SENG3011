@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MSM_Trader")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Rubber Ducky Trader")]
+[assembly: AssemblyDescription("Uses multiple implementations of the Momentum Strategy to provide the best investment returns.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MSM_Trader")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCompany("Fire Breathing Rubber Duckies")]
+[assembly: AssemblyProduct("RubberDuckyTrader")]
+[assembly: AssemblyCopyright("Copyright © Fire Breathing Rubber Duckies  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

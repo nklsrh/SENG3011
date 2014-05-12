@@ -1,10 +1,10 @@
-C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\bin\Debug\MSM_Trader.exe.config
-C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\bin\Debug\MSM_Trader.exe
-C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\bin\Debug\MSM_Trader.pdb
 C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.Form1.resources
-C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.Properties.Resources.resources
 C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.csproj.GenerateResource.Cache
-C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.exe
-C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.pdb
 C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.csprojResolveAssemblyReference.cache
-C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\bin\Debug\System.Windows.Forms.Ribbon35.dll
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\MSM_Trader.About.resources
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\bin\Debug\RubberDuckyTrader.exe.config
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\bin\Debug\RubberDuckyTrader.exe
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\bin\Debug\RubberDuckyTrader.pdb
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\RubberDuckyTrader.Properties.Resources.resources
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\RubberDuckyTrader.exe
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Debug\RubberDuckyTrader.pdb

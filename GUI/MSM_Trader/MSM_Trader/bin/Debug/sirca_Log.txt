@@ -1,0 +1,14 @@
+Log File
+Team Name: YOPO
+MSM  Version 0.3
+Execution start time: 2014-05-12T19:35:44.434+10:00
+Execution end time: 2014-05-12T19:35:47.510+10:00
+Execution time: 3043 milliseconds
+Input CSV filename: C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\bin\Debug\sirca.csv
+Input parameter filename: C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\bin\Debug\arguments.txt
+Input parameter n: 7
+Input parameter threshold: 0.0001
+
+--------SUCCESS---------
+Total number of TRADE record: 16485
+Total number of record: 100227

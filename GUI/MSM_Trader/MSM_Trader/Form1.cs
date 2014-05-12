@@ -27,7 +27,7 @@ namespace MSM_Trader
 
         public string evaluatorURL;
 
-        public string version = "0.5";
+        public string version = RubberDuckyTrader.Properties.Settings.Default.version;
 
         public Strategy strategy = Strategy.RubberDucky;
 
@@ -45,14 +45,17 @@ namespace MSM_Trader
             EnableDisableUIElements(GUI_Steps.Import);
             lstStrategy.SelectedIndex = 0;
 
+            version = RubberDuckyTrader.Properties.Settings.Default.version;
+
             if (LoadSettingsFile())
             {
                 openFile.InitialDirectory = inputFileName;
-                if (importOnStart)
+                if (importOnStart && inputFileName.Length > 0)
                 {
                     OpenCSV(dataInput, inputFileName);
                     ReadLog();
                     ReadEvaluation();
+                    UpdateEvaluatedData();
                 }
             }
             else
@@ -61,9 +64,11 @@ namespace MSM_Trader
                 executableArguments = System.IO.Directory.GetCurrentDirectory() + "\\arguments.txt";
                 evaluatorURL = System.IO.Directory.GetCurrentDirectory() + "\\Evaluator.jar";
                 threshold = "0.0001";
-                window = "2";
+                window = "7";
                 WriteSettingsFile();
             }
+
+            lblVersion.Text = "v" + version;
         }
 
         public bool LoadSettingsFile()
@@ -131,11 +136,11 @@ namespace MSM_Trader
                             {
                                 if (Convert.ToDouble(version) > Convert.ToDouble(fileDataField[1]))
                                 {
-                                    version = fileDataField[1];
                                     writeSettingsAfter = true;
                                 }
                                 else
                                 {
+                                    version = fileDataField[1];
                                     writeSettingsAfter = false;
                                 }
                             }
@@ -206,8 +211,6 @@ namespace MSM_Trader
 
         public void SetInputFile()
         {
-            this.Text = inputFileName + " - Rubber Ducky Trader";
-
             OpenCSV(dataInput, inputFileURL);
         }
 
@@ -228,10 +231,13 @@ namespace MSM_Trader
                     {
                         EnableDisableUIElements(GUI_Steps.Find);
                     }
+                    this.Text = System.IO.Path.GetFileName(inputFileURL) + " - Rubber Ducky Trader";
                 }
                 else
                 {
-                    MessageBox.Show("Couldn't find CSV at " + csvPath);
+                    MessageBox.Show("Couldn't find CSV. Delete TraderSettings.cfg and Import a new CSV.");
+                    lblStatus.Text = "No CSV file imported.";
+                    return;
                 }
             }
             catch (Exception ex)
@@ -291,7 +297,8 @@ namespace MSM_Trader
         public enum Strategy
         {
             RubberDucky,
-            Actuators
+            Actuators,
+            YOPO
         }
 
         private void lstStrategy_SelectedIndexChanged(object sender, EventArgs e)
@@ -303,6 +310,9 @@ namespace MSM_Trader
                     break;
                 case 1:
                     SwitchStrategy(Strategy.Actuators);
+                    break;
+                case 2:
+                    SwitchStrategy(Strategy.YOPO);
                     break;
             }
         }
@@ -346,6 +356,7 @@ namespace MSM_Trader
                     txtVal_Threshold.Enabled = false;
                     txtVal_Window.Enabled = false;
                     lstStrategy.Enabled = false;
+                    chkAutoImport.Enabled = false;
                     break;
                 case GUI_Steps.Find:
                     btnFind.Enabled = true;
@@ -354,6 +365,7 @@ namespace MSM_Trader
                     txtVal_Threshold.Enabled = true;
                     txtVal_Window.Enabled = true;
                     lstStrategy.Enabled = true;
+                    chkAutoImport.Enabled = true;
                     break;
                 case GUI_Steps.Run:
                     btnFind.Enabled = true;
@@ -362,6 +374,7 @@ namespace MSM_Trader
                     txtVal_Threshold.Enabled = true;
                     txtVal_Window.Enabled = true;
                     lstStrategy.Enabled = true;
+                    chkAutoImport.Enabled = true;
                     break;
                 case GUI_Steps.Export:
                     btnFind.Enabled = true;
@@ -370,6 +383,7 @@ namespace MSM_Trader
                     txtVal_Threshold.Enabled = true;
                     txtVal_Window.Enabled = true;
                     lstStrategy.Enabled = true;
+                    chkAutoImport.Enabled = true;
                     break;
             }
         }
@@ -384,6 +398,9 @@ namespace MSM_Trader
                 case Strategy.Actuators:
                     RunStrategy_Actuators();
                     break;
+                case Strategy.YOPO:
+                    RunStrategy_YOPO();
+                    break;
             }
         }
 
@@ -394,6 +411,7 @@ namespace MSM_Trader
                 WriteSettingsFile();
                 EnableDisableUIElements(GUI_Steps.Export);
                 ReadLog();
+                UpdateEvaluatedData();
             }
         }
         void RunStrategy_Actuators()
@@ -403,6 +421,17 @@ namespace MSM_Trader
                 WriteSettingsFile();
                 EnableDisableUIElements(GUI_Steps.Export);
                 ReadLog();
+                UpdateEvaluatedData();
+            }
+        }
+        void RunStrategy_YOPO()
+        {
+            if (UpdateArgumentsTXT_YOPO() && Run_MSM_YOPO() && Run_Evaluator())
+            {
+                WriteSettingsFile();
+                EnableDisableUIElements(GUI_Steps.Export);
+                ReadLog();
+                UpdateEvaluatedData();
             }
         }
 
@@ -464,6 +493,26 @@ namespace MSM_Trader
                 System.IO.StreamWriter fileWriter = new System.IO.StreamWriter(executableArguments, false);
                 fileWriter.WriteLine("" + threshold);
                 fileWriter.WriteLine("" + window);
+                fileWriter.Dispose();
+                fileWriter.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+            return true;
+        }
+
+        public bool UpdateArgumentsTXT_YOPO()
+        {
+            window = txtVal_Window.Text;
+            threshold = txtVal_Threshold.Text;
+            try
+            {
+                System.IO.StreamWriter fileWriter = new System.IO.StreamWriter(executableArguments, false);
+                fileWriter.WriteLine("" + window);
+                fileWriter.WriteLine("" + threshold);
                 fileWriter.Dispose();
                 fileWriter.Close();
             }
@@ -542,6 +591,64 @@ namespace MSM_Trader
                 ReadUpdateCSV(dataOutput, System.IO.Directory.GetCurrentDirectory() + "\\OrderList.csv", true);
                 tabs.SelectedIndex = 1;
 
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(errorSpecific + "\r\n" + ex.Message);
+                return false;
+            }
+        }
+
+        public bool Run_MSM_YOPO()
+        {
+            lblStatus.Text = "Running YOPO Strategy";
+            string errorSpecific = "Couldn't find Java, or arguments.txt, or MSM.jar";
+
+            ClearLogFile();
+
+            try
+            {
+                ProcessStartInfo processInfo = new ProcessStartInfo("java", "-jar " + System.IO.Directory.GetCurrentDirectory() + "\\MSM_YOPO.jar" + " " + inputFileURL + " " + executableArguments)
+                {
+                    CreateNoWindow = true,
+                    UseShellExecute = true
+                };
+                Process proc;
+
+                if ((proc = Process.Start(processInfo)) == null)
+                {
+                    throw new InvalidOperationException("??");
+                }
+                proc.WaitForExit();
+                int exitCode = proc.ExitCode;
+                proc.Close();
+
+                errorSpecific = "Error with OrderList.csv";
+
+                tabs.SelectedIndex = 1;
+
+                // For YOPO, we have to move the logs from their annoyingly-named file to our own  
+                System.IO.StreamReader reader = new System.IO.StreamReader(System.IO.Directory.GetParent(inputFileURL) + "\\" + System.IO.Path.GetFileNameWithoutExtension(inputFileURL) + "_Log.txt");
+                System.IO.StreamWriter fileWriter = new System.IO.StreamWriter(System.IO.Directory.GetCurrentDirectory() + "\\MomentumStrategyModule.log", false);           
+                //System.IO.StreamReader reader = new System.IO.StreamReader(System.IO.Path.GetFileNameWithoutExtension(inputFileURL) + "_Log.txt");
+                //System.IO.StreamWriter fileWriter = new System.IO.StreamWriter(System.IO.Directory.GetCurrentDirectory() + "\\MomentumStrategyModule.log", false);
+
+                while (reader.Peek() != -1)
+                {
+                    fileWriter.WriteLine(reader.ReadLine());
+                }
+                fileWriter.Dispose();
+                fileWriter.Close();
+                reader.Close();
+
+                // rename sirca_Order.csv to OrderList.csv
+                System.IO.File.Delete(System.IO.Directory.GetCurrentDirectory() + "\\OrderList.csv");
+                System.IO.File.Move(System.IO.Directory.GetParent(inputFileURL) + "\\" + System.IO.Path.GetFileNameWithoutExtension(inputFileURL) + "_Order.csv", System.IO.Directory.GetCurrentDirectory() + "\\OrderList.csv");
+                
+                // finally, read OrderList.csv
+                ReadUpdateCSV(dataOutput, System.IO.Directory.GetCurrentDirectory() + "\\OrderList.csv", true);
+              
                 return true;
             }
             catch (Exception ex)
@@ -632,6 +739,47 @@ namespace MSM_Trader
         }
 
 
+        void UpdateEvaluatedData()
+        {
+            try
+            {
+                lblOverallReturn.Text = txtEvaluation.Lines[0].Split(':')[1].Substring(1);
+
+                lblOverallReturn.ForeColor = Color.DarkGray;
+                if (Convert.ToDouble(lblOverallReturn.Text.Substring(0, lblOverallReturn.Text.Length - 1)) < -0.001)
+                {
+                    lblOverallReturn.ForeColor = Color.Red;
+                }
+                else if (Convert.ToDouble(lblOverallReturn.Text.Substring(0, lblOverallReturn.Text.Length - 1)) > 0.001)
+                {
+                    lblOverallReturn.ForeColor = Color.YellowGreen;
+                }
+                lblPairCount.Text = "" + (txtEvaluation.Lines.Length - 2);
+
+                DataTable dt = new DataTable();
+                dt.Columns.Add("S No.", typeof(Int32));
+                dt.Columns.Add("Buy", typeof(Double));
+                dt.Columns.Add("Sell", typeof(Double));
+                dt.Columns.Add("Return %", typeof(Double));
+
+                //Reading Data
+                for (int i = 1; i < txtEvaluation.Lines.Length - 1; i++)
+                {
+                    string fileRow = txtEvaluation.Lines[i];
+                    string[] fileDataField = fileRow.Split(' ');
+
+                    dt.Rows.Add(fileDataField[0], fileDataField[2], fileDataField[4], fileDataField[6].Substring(0, fileDataField[6].Length - 1));
+                }
+
+                dataEvaluation.DataSource = dt;
+                dataEvaluation.Sort(dataEvaluation.Columns[0], ListSortDirection.Ascending);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
 
 
@@ -660,6 +808,17 @@ namespace MSM_Trader
         private void btnEvaluate_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            About a = new About();
+            a.ShowDialog();
         }
 
 
