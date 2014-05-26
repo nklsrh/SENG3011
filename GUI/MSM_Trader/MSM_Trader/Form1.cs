@@ -68,6 +68,8 @@ namespace MSM_Trader
                 WriteSettingsFile();
             }
 
+            cbVals.SelectedIndex = 0;
+
             lblVersion.Text = "v" + version;
         }
 
@@ -195,6 +197,8 @@ namespace MSM_Trader
         private void btnImport_Click(object sender, EventArgs e)
         {
             openFile.ShowDialog();
+            tabs.SelectedIndex = 0;
+            tabsInput.SelectedIndex = 1;
         }
 
         private void openFile_FileOk(object sender, CancelEventArgs e)
@@ -268,6 +272,7 @@ namespace MSM_Trader
                     while (dataInput.Columns.Count < fileDataField.Length)
                     {
                         dataInput.Columns.Add(fileDataField[i], fileDataField[i]);
+                        dataInput.Columns[i].Name = fileDataField[i];
                         if (firstRowIsHeader)
                         {
                             i++;
@@ -357,6 +362,8 @@ namespace MSM_Trader
                     txtVal_Window.Enabled = false;
                     lstStrategy.Enabled = false;
                     chkAutoImport.Enabled = false;
+                    tabInput.Enabled = false;
+                    chart2.Enabled = false;
                     break;
                 case GUI_Steps.Find:
                     btnFind.Enabled = true;
@@ -366,6 +373,8 @@ namespace MSM_Trader
                     txtVal_Window.Enabled = true;
                     lstStrategy.Enabled = true;
                     chkAutoImport.Enabled = true;
+                    tabInput.Enabled = true;
+                    chart2.Enabled = false;
                     break;
                 case GUI_Steps.Run:
                     btnFind.Enabled = true;
@@ -375,6 +384,8 @@ namespace MSM_Trader
                     txtVal_Window.Enabled = true;
                     lstStrategy.Enabled = true;
                     chkAutoImport.Enabled = true;
+                    tabInput.Enabled = true;
+                    chart2.Enabled = true;
                     break;
                 case GUI_Steps.Export:
                     btnFind.Enabled = true;
@@ -384,6 +395,8 @@ namespace MSM_Trader
                     txtVal_Window.Enabled = true;
                     lstStrategy.Enabled = true;
                     chkAutoImport.Enabled = true;
+                    tabInput.Enabled = true;
+                    chart2.Enabled = true;
                     break;
             }
         }
@@ -402,6 +415,8 @@ namespace MSM_Trader
                     RunStrategy_YOPO();
                     break;
             }
+
+            UpdateEvalChart();
         }
 
         void RunStrategy_RubberDucky()
@@ -821,7 +836,91 @@ namespace MSM_Trader
             a.ShowDialog();
         }
 
+        private void cbVals_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbVals.Text != "" && cbVals.Text != "Select data for graph")
+            {
+                //chart1.Series.Clear();
+                //chart1.ChartAreas.Clear();
+                chart1.ChartAreas[0] = new System.Windows.Forms.DataVisualization.Charting.ChartArea(cbVals.Text);
+                //chart1.Series.Add(cbVals.Text);
+                chart1.Series[0] = new System.Windows.Forms.DataVisualization.Charting.Series();
+                chart1.Series[0].LegendText = cbVals.Text;
+
+                if (dataInput.Rows.Count > 0 && dataInput.Columns.Count > 0)
+                {
+                    for (int i = 0; i < dataInput.Rows.Count; i++)
+                    {
+                        if (dataInput.Rows[i].Cells[FindIndexWithName(dataInput, cbVals.Text)].Value != null && dataInput.Rows[i].Cells[FindIndexWithName(dataInput, "Time")].Value != null)
+                        {
+                            chart1.Series[0].Points.AddXY(dataInput.Rows[i].Cells[FindIndexWithName(dataInput, "Time")].Value, dataInput.Rows[i].Cells[FindIndexWithName(dataInput, cbVals.Text)].Value);
+                        }
+                    }
+                }
+            }
+        }
+        private void UpdateEvalChart()
+        {
+            chart2.ChartAreas[0] = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            chart2.Series[0] = new System.Windows.Forms.DataVisualization.Charting.Series();
+            chart2.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+            chart2.Series[0].LegendText = "Prices after MSM (AUD)";
+            //chart2.Series[1] = new System.Windows.Forms.DataVisualization.Charting.Series();
+            //chart2.Series[1].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+            //chart2.Series[1].LegendText = "After MSM";
+
+            //if (dataInput.Rows.Count > 0 && dataInput.Columns.Count > 0)
+            //{
+            //    for (int i = 0; i < dataInput.Rows.Count; i++)
+            //    {
+            //        if (dataInput.Rows[i].Cells[FindIndexWithName(dataInput, "Price")].Value != null && dataInput.Rows[i].Cells[FindIndexWithName(dataInput, "Time")].Value != null)
+            //        {
+            //            chart2.Series[0].Points.AddXY(dataInput.Rows[i].Cells[FindIndexWithName(dataInput, "Time")].Value, dataInput.Rows[i].Cells[FindIndexWithName(dataInput, "Price")].Value);
+            //        }
+            //    }
+            //}
+            if (dataOutput.Rows.Count > 0 && dataOutput.Columns.Count > 0)
+            {
+                for (int i = 0; i < dataOutput.Rows.Count; i++)
+                {
+                    if (dataOutput.Rows[i].Cells[FindIndexWithName(dataOutput, "Price")].Value != null && dataOutput.Rows[i].Cells[FindIndexWithName(dataOutput, "Time")].Value != null)
+                    {
+                        chart2.Series[0].Points.AddXY(dataOutput.Rows[i].Cells[FindIndexWithName(dataOutput, "Time")].Value, dataOutput.Rows[i].Cells[FindIndexWithName(dataOutput, "Price")].Value);
+                    }
+                }
+            }
+
+            chart3.ChartAreas[0] = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            chart3.Series[0] = new System.Windows.Forms.DataVisualization.Charting.Series();
+            chart3.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            chart3.Series[0].LegendText = "BID/ASK net outcomes (AUD)";
+
+            if (dataEvaluation.Rows.Count > 0 && dataEvaluation.Columns.Count > 0)
+            {
+                for (int i = 0; i < dataEvaluation.Rows.Count; i++)
+                {
+                    if (dataEvaluation.Rows[i].Cells[FindIndexWithName(dataEvaluation, "S No.")].Value != null && dataEvaluation.Rows[i].Cells[FindIndexWithName(dataEvaluation, "Buy")].Value != null)
+                    {
+                        chart3.Series[0].Points.AddXY(dataEvaluation.Rows[i].Cells[FindIndexWithName(dataEvaluation, "S No.")].Value, (double)dataEvaluation.Rows[i].Cells[FindIndexWithName(dataEvaluation, "Sell")].Value - (double)dataEvaluation.Rows[i].Cells[FindIndexWithName(dataEvaluation, "Buy")].Value);
+                    }
+                }
+            }
+        }
+
+
+        int FindIndexWithName(DataGridView dataInput, string name)
+        {
+            for (int i = 0; i < dataInput.Columns.Count; i++)
+            {
+                if (dataInput.Columns[i].HeaderText == name)
+                {
+                    return i;
+                }
+            }
+            return 0;
+        }
 
     }
 }
+
 

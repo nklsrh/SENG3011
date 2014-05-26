@@ -1,0 +1,4 @@
+1 Bought 37.38 Sold 37.38 Return 0%
+2 Bought 37.35 Sold 37.335 Return -0.04%
+3 Bought 37.35 Sold 37.37 Return 0.05%
+Final return: 0.01%
