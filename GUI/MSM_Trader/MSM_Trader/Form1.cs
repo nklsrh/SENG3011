@@ -846,6 +846,8 @@ namespace MSM_Trader
                 //chart1.Series.Add(cbVals.Text);
                 chart1.Series[0] = new System.Windows.Forms.DataVisualization.Charting.Series();
                 chart1.Series[0].LegendText = cbVals.Text;
+                chart1.ChartAreas[0].AxisX.Title = "Time";
+                chart1.ChartAreas[0].AxisY.Title = cbVals.Text;
 
                 if (dataInput.Rows.Count > 0 && dataInput.Columns.Count > 0)
                 {
@@ -863,8 +865,10 @@ namespace MSM_Trader
         {
             chart2.ChartAreas[0] = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             chart2.Series[0] = new System.Windows.Forms.DataVisualization.Charting.Series();
-            chart2.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+            chart2.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
             chart2.Series[0].LegendText = "Prices after MSM (AUD)";
+            chart2.ChartAreas[0].AxisX.Title = "Time";
+            chart2.ChartAreas[0].AxisY.Title = "Price (AUD)";
             //chart2.Series[1] = new System.Windows.Forms.DataVisualization.Charting.Series();
             //chart2.Series[1].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
             //chart2.Series[1].LegendText = "After MSM";
@@ -881,7 +885,7 @@ namespace MSM_Trader
             //}
             if (dataOutput.Rows.Count > 0 && dataOutput.Columns.Count > 0)
             {
-                for (int i = 0; i < dataOutput.Rows.Count; i++)
+                for (int i = 0; i < dataOutput.Rows.Count - 1; i++)
                 {
                     if (dataOutput.Rows[i].Cells[FindIndexWithName(dataOutput, "Price")].Value != null && dataOutput.Rows[i].Cells[FindIndexWithName(dataOutput, "Time")].Value != null)
                     {
@@ -894,6 +898,8 @@ namespace MSM_Trader
             chart3.Series[0] = new System.Windows.Forms.DataVisualization.Charting.Series();
             chart3.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             chart3.Series[0].LegendText = "BID/ASK net outcomes (AUD)";
+            chart3.ChartAreas[0].AxisX.Title = "BID/ASK Pair No.";
+            chart3.ChartAreas[0].AxisY.Title = "Net outcome (AUD)";
 
             if (dataEvaluation.Rows.Count > 0 && dataEvaluation.Columns.Count > 0)
             {

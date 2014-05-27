@@ -7,3 +7,4 @@ C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Release\RubberD
 C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Release\MSM_Trader.csproj.GenerateResource.Cache
 C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Release\RubberDuckyTrader.exe
 C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Release\RubberDuckyTrader.pdb
+C:\Users\Nikhil\Documents\SENG3011\GUI\MSM_Trader\MSM_Trader\obj\Release\MSM_Trader.csprojResolveAssemblyReference.cache

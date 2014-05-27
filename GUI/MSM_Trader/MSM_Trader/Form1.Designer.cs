@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -38,9 +37,16 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabs = new System.Windows.Forms.TabControl();
             this.tabInput = new System.Windows.Forms.TabPage();
+            this.tabsInput = new System.Windows.Forms.TabControl();
+            this.tabInput1 = new System.Windows.Forms.TabPage();
             this.dataInput = new System.Windows.Forms.DataGridView();
+            this.tabInput2 = new System.Windows.Forms.TabPage();
+            this.cbVals = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabOutput = new System.Windows.Forms.TabPage();
             this.dataOutput = new System.Windows.Forms.DataGridView();
             this.tabEvaluator = new System.Windows.Forms.TabPage();
@@ -51,6 +57,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.lblPairCount = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.txtEvaluation = new System.Windows.Forms.TextBox();
             this.tabLog = new System.Windows.Forms.TabPage();
             this.txtLog = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -79,21 +91,13 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabsInput = new System.Windows.Forms.TabControl();
-            this.tabInput1 = new System.Windows.Forms.TabPage();
-            this.tabInput2 = new System.Windows.Forms.TabPage();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.label8 = new System.Windows.Forms.Label();
-            this.cbVals = new System.Windows.Forms.ComboBox();
-            this.txtEvaluation = new System.Windows.Forms.TextBox();
-            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabs.SuspendLayout();
             this.tabInput.SuspendLayout();
+            this.tabsInput.SuspendLayout();
+            this.tabInput1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataInput)).BeginInit();
+            this.tabInput2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabOutput.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataOutput)).BeginInit();
             this.tabEvaluator.SuspendLayout();
@@ -102,21 +106,17 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataEvaluation)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
             this.tabLog.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.statusBar.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.tabsInput.SuspendLayout();
-            this.tabInput1.SuspendLayout();
-            this.tabInput2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
             this.SuspendLayout();
             // 
             // tabs
@@ -148,6 +148,29 @@
             this.tabInput.Text = "Input";
             this.tabInput.UseVisualStyleBackColor = true;
             // 
+            // tabsInput
+            // 
+            this.tabsInput.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.tabsInput.Controls.Add(this.tabInput1);
+            this.tabsInput.Controls.Add(this.tabInput2);
+            this.tabsInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabsInput.Location = new System.Drawing.Point(3, 2);
+            this.tabsInput.Name = "tabsInput";
+            this.tabsInput.SelectedIndex = 0;
+            this.tabsInput.Size = new System.Drawing.Size(687, 396);
+            this.tabsInput.TabIndex = 1;
+            // 
+            // tabInput1
+            // 
+            this.tabInput1.Controls.Add(this.dataInput);
+            this.tabInput1.Location = new System.Drawing.Point(4, 29);
+            this.tabInput1.Name = "tabInput1";
+            this.tabInput1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabInput1.Size = new System.Drawing.Size(679, 363);
+            this.tabInput1.TabIndex = 0;
+            this.tabInput1.Text = "Input (Data)";
+            this.tabInput1.UseVisualStyleBackColor = true;
+            // 
             // dataInput
             // 
             this.dataInput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -159,6 +182,71 @@
             this.dataInput.RowTemplate.Height = 24;
             this.dataInput.Size = new System.Drawing.Size(673, 357);
             this.dataInput.TabIndex = 0;
+            // 
+            // tabInput2
+            // 
+            this.tabInput2.Controls.Add(this.cbVals);
+            this.tabInput2.Controls.Add(this.label8);
+            this.tabInput2.Controls.Add(this.chart1);
+            this.tabInput2.Location = new System.Drawing.Point(4, 29);
+            this.tabInput2.Name = "tabInput2";
+            this.tabInput2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabInput2.Size = new System.Drawing.Size(679, 363);
+            this.tabInput2.TabIndex = 1;
+            this.tabInput2.Text = "Input (Graphs)";
+            this.tabInput2.UseVisualStyleBackColor = true;
+            // 
+            // cbVals
+            // 
+            this.cbVals.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.cbVals.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVals.Font = new System.Drawing.Font("Segoe WP", 10F, System.Drawing.FontStyle.Bold);
+            this.cbVals.FormattingEnabled = true;
+            this.cbVals.Items.AddRange(new object[] {
+            "Volume",
+            "Price"});
+            this.cbVals.Location = new System.Drawing.Point(203, 6);
+            this.cbVals.Name = "cbVals";
+            this.cbVals.Size = new System.Drawing.Size(158, 25);
+            this.cbVals.TabIndex = 4;
+            this.cbVals.SelectedIndexChanged += new System.EventHandler(this.cbVals_SelectedIndexChanged);
+            // 
+            // label8
+            // 
+            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Segoe WP", 10F, System.Drawing.FontStyle.Bold);
+            this.label8.Location = new System.Drawing.Point(367, 9);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(64, 19);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "vs Time.";
+            // 
+            // chart1
+            // 
+            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chart1.BackColor = System.Drawing.Color.Transparent;
+            this.chart1.BorderlineWidth = 0;
+            this.chart1.BorderSkin.BorderColor = System.Drawing.Color.Silver;
+            chartArea1.BackColor = System.Drawing.Color.Transparent;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            legend1.Title = "Legend";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(6, 37);
+            this.chart1.Name = "chart1";
+            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(670, 327);
+            this.chart1.TabIndex = 0;
+            this.chart1.Text = "Input (Graphs)";
             // 
             // tabOutput
             // 
@@ -304,6 +392,109 @@
             this.label6.Size = new System.Drawing.Size(90, 19);
             this.label6.TabIndex = 7;
             this.label6.Text = "Buy/Sell pairs";
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(175, 4);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(293, 398);
+            this.tabControl1.TabIndex = 9;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.chart2);
+            this.tabPage1.Location = new System.Drawing.Point(4, 26);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(285, 368);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Prices bought";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // chart2
+            // 
+            this.chart2.BackColor = System.Drawing.Color.Transparent;
+            this.chart2.BorderlineWidth = 0;
+            this.chart2.BorderSkin.BorderColor = System.Drawing.Color.Silver;
+            chartArea2.BackColor = System.Drawing.Color.Transparent;
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
+            this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend2.Name = "Legend1";
+            legend2.Title = "Legend";
+            this.chart2.Legends.Add(legend2);
+            this.chart2.Location = new System.Drawing.Point(3, 3);
+            this.chart2.Name = "chart2";
+            this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series2.Legend = "Legend1";
+            series2.LegendText = "Price before";
+            series2.Name = "Series1";
+            series2.YValuesPerPoint = 6;
+            this.chart2.Series.Add(series2);
+            this.chart2.Size = new System.Drawing.Size(279, 362);
+            this.chart2.TabIndex = 0;
+            this.chart2.Text = "Input (Graphs)";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.chart3);
+            this.tabPage2.Location = new System.Drawing.Point(4, 26);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(285, 368);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "BID/ASK outcomes";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // chart3
+            // 
+            this.chart3.BackColor = System.Drawing.Color.Transparent;
+            this.chart3.BorderlineWidth = 0;
+            this.chart3.BorderSkin.BorderColor = System.Drawing.Color.Silver;
+            chartArea3.BackColor = System.Drawing.Color.Transparent;
+            chartArea3.Name = "ChartArea1";
+            this.chart3.ChartAreas.Add(chartArea3);
+            this.chart3.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend3.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend3.Name = "Legend1";
+            legend3.Title = "Legend";
+            this.chart3.Legends.Add(legend3);
+            this.chart3.Location = new System.Drawing.Point(3, 3);
+            this.chart3.Name = "chart3";
+            this.chart3.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.LegendText = "Price before";
+            series3.Name = "Series1";
+            this.chart3.Series.Add(series3);
+            this.chart3.Size = new System.Drawing.Size(279, 362);
+            this.chart3.TabIndex = 1;
+            this.chart3.Text = "Input (Graphs)";
+            // 
+            // txtEvaluation
+            // 
+            this.txtEvaluation.BackColor = System.Drawing.Color.White;
+            this.txtEvaluation.Font = new System.Drawing.Font("Consolas", 8.75F);
+            this.txtEvaluation.Location = new System.Drawing.Point(3, 2);
+            this.txtEvaluation.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtEvaluation.Multiline = true;
+            this.txtEvaluation.Name = "txtEvaluation";
+            this.txtEvaluation.ReadOnly = true;
+            this.txtEvaluation.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtEvaluation.Size = new System.Drawing.Size(199, 400);
+            this.txtEvaluation.TabIndex = 1;
+            this.txtEvaluation.Text = "Run + Evaluate to find evaluations...";
+            this.txtEvaluation.Visible = false;
             // 
             // tabLog
             // 
@@ -620,196 +811,6 @@
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
-            // tabsInput
-            // 
-            this.tabsInput.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
-            this.tabsInput.Controls.Add(this.tabInput1);
-            this.tabsInput.Controls.Add(this.tabInput2);
-            this.tabsInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabsInput.Location = new System.Drawing.Point(3, 2);
-            this.tabsInput.Name = "tabsInput";
-            this.tabsInput.SelectedIndex = 0;
-            this.tabsInput.Size = new System.Drawing.Size(687, 396);
-            this.tabsInput.TabIndex = 1;
-            // 
-            // tabInput1
-            // 
-            this.tabInput1.Controls.Add(this.dataInput);
-            this.tabInput1.Location = new System.Drawing.Point(4, 29);
-            this.tabInput1.Name = "tabInput1";
-            this.tabInput1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInput1.Size = new System.Drawing.Size(679, 363);
-            this.tabInput1.TabIndex = 0;
-            this.tabInput1.Text = "Input (Data)";
-            this.tabInput1.UseVisualStyleBackColor = true;
-            // 
-            // tabInput2
-            // 
-            this.tabInput2.Controls.Add(this.cbVals);
-            this.tabInput2.Controls.Add(this.label8);
-            this.tabInput2.Controls.Add(this.chart1);
-            this.tabInput2.Location = new System.Drawing.Point(4, 29);
-            this.tabInput2.Name = "tabInput2";
-            this.tabInput2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInput2.Size = new System.Drawing.Size(679, 363);
-            this.tabInput2.TabIndex = 1;
-            this.tabInput2.Text = "Input (Graphs)";
-            this.tabInput2.UseVisualStyleBackColor = true;
-            // 
-            // chart1
-            // 
-            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chart1.BackColor = System.Drawing.Color.Transparent;
-            this.chart1.BorderlineWidth = 0;
-            this.chart1.BorderSkin.BorderColor = System.Drawing.Color.Silver;
-            chartArea1.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            legend1.Title = "Legend";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(6, 37);
-            this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(670, 323);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "Input (Graphs)";
-            // 
-            // label8
-            // 
-            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Segoe WP", 10F, System.Drawing.FontStyle.Bold);
-            this.label8.Location = new System.Drawing.Point(367, 9);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(64, 19);
-            this.label8.TabIndex = 3;
-            this.label8.Text = "vs Time.";
-            // 
-            // cbVals
-            // 
-            this.cbVals.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.cbVals.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVals.Font = new System.Drawing.Font("Segoe WP", 10F, System.Drawing.FontStyle.Bold);
-            this.cbVals.FormattingEnabled = true;
-            this.cbVals.Items.AddRange(new object[] {
-            "Volume",
-            "Price"});
-            this.cbVals.Location = new System.Drawing.Point(203, 6);
-            this.cbVals.Name = "cbVals";
-            this.cbVals.Size = new System.Drawing.Size(158, 25);
-            this.cbVals.TabIndex = 4;
-            this.cbVals.SelectedIndexChanged += new System.EventHandler(this.cbVals_SelectedIndexChanged);
-            // 
-            // txtEvaluation
-            // 
-            this.txtEvaluation.BackColor = System.Drawing.Color.White;
-            this.txtEvaluation.Font = new System.Drawing.Font("Consolas", 8.75F);
-            this.txtEvaluation.Location = new System.Drawing.Point(3, 2);
-            this.txtEvaluation.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtEvaluation.Multiline = true;
-            this.txtEvaluation.Name = "txtEvaluation";
-            this.txtEvaluation.ReadOnly = true;
-            this.txtEvaluation.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtEvaluation.Size = new System.Drawing.Size(199, 400);
-            this.txtEvaluation.TabIndex = 1;
-            this.txtEvaluation.Text = "Run + Evaluate to find evaluations...";
-            this.txtEvaluation.Visible = false;
-            // 
-            // chart2
-            // 
-            this.chart2.BackColor = System.Drawing.Color.Transparent;
-            this.chart2.BorderlineWidth = 0;
-            this.chart2.BorderSkin.BorderColor = System.Drawing.Color.Silver;
-            chartArea2.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
-            this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend2.Name = "Legend1";
-            legend2.Title = "Legend";
-            this.chart2.Legends.Add(legend2);
-            this.chart2.Location = new System.Drawing.Point(3, 3);
-            this.chart2.Name = "chart2";
-            this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series2.Legend = "Legend1";
-            series2.LegendText = "Price before";
-            series2.Name = "Series1";
-            this.chart2.Series.Add(series2);
-            this.chart2.Size = new System.Drawing.Size(279, 362);
-            this.chart2.TabIndex = 0;
-            this.chart2.Text = "Input (Graphs)";
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(175, 4);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(293, 398);
-            this.tabControl1.TabIndex = 9;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.chart2);
-            this.tabPage1.Location = new System.Drawing.Point(4, 26);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(285, 368);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Prices bought";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.chart3);
-            this.tabPage2.Location = new System.Drawing.Point(4, 26);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(285, 368);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "BID/ASK outcomes";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // chart3
-            // 
-            this.chart3.BackColor = System.Drawing.Color.Transparent;
-            this.chart3.BorderlineWidth = 0;
-            this.chart3.BorderSkin.BorderColor = System.Drawing.Color.Silver;
-            chartArea3.BackColor = System.Drawing.Color.Transparent;
-            chartArea3.Name = "ChartArea1";
-            this.chart3.ChartAreas.Add(chartArea3);
-            this.chart3.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend3.Name = "Legend1";
-            legend3.Title = "Legend";
-            this.chart3.Legends.Add(legend3);
-            this.chart3.Location = new System.Drawing.Point(3, 3);
-            this.chart3.Name = "chart3";
-            this.chart3.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.LegendText = "Price before";
-            series3.Name = "Series1";
-            this.chart3.Series.Add(series3);
-            this.chart3.Size = new System.Drawing.Size(279, 362);
-            this.chart3.TabIndex = 1;
-            this.chart3.Text = "Input (Graphs)";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -831,7 +832,12 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabs.ResumeLayout(false);
             this.tabInput.ResumeLayout(false);
+            this.tabsInput.ResumeLayout(false);
+            this.tabInput1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataInput)).EndInit();
+            this.tabInput2.ResumeLayout(false);
+            this.tabInput2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.tabOutput.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataOutput)).EndInit();
             this.tabEvaluator.ResumeLayout(false);
@@ -841,6 +847,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataEvaluation)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart3)).EndInit();
             this.tabLog.ResumeLayout(false);
             this.tabLog.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -851,16 +862,6 @@
             this.statusBar.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tabsInput.ResumeLayout(false);
-            this.tabInput1.ResumeLayout(false);
-            this.tabInput2.ResumeLayout(false);
-            this.tabInput2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
