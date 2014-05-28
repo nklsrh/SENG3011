@@ -19,7 +19,7 @@ public class MainTest {
 		tester.testSelectTrades();
 		tester.testCalculateReturns();
 		tester.testCalculateMovingAverage(3);
-		//tester.testCalculateMovingAverage(4); //Currently fails tests.
+		//tester.testCalculateMovingAverage(4); 
 		//tester.testCalculateMovingAverage(5);
 		tester.testGenerateTradingSignals(0.001);
 		tester.testGenerateTradingSignals(0.0001);

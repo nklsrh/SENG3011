@@ -69,16 +69,16 @@ public class MSMInstance
 		// If it's normal arguments
 		if (args.length == 2)
 		{
-			sircaFile = getSircaFile (args, test);
-			argFile = getArgsFile (args, test);
+			sircaFile = getSircaFile (args);
+			argFile = getArgsFile (args);
 			checkValidFileArgs (args);
 		}
 		// If it's testing arguments
 		else if (args.length == 4)
 		{
-			sircaFile = getSircaFile (args, test);
-			argFile = getArgsFile (args, test);
-			checkValidTestArgs (args);
+			sircaFile = getSircaFile (args);
+			argFile = getArgsFile (args);
+			checkValidFileArgs (args);
 		}
 		else
 		{
@@ -224,42 +224,6 @@ public class MSMInstance
 	
 
 	/**
-	 * In the case of testing, checks arguments for validity, then SAVES them to variables
-	 * @param test (GETS OVERWRITTEN) Is test enabled?
-	 * @param logger MyLogger object
-	 * @param sircaFile (GETS OVERWRITTEN) SIRCA file
-	 * @param argFile (GETS OVERWRITTEN) arguments file
-	 * @param window window for trade function
-	 * @param threshold threshold for trade function
-	 * @param verbosity (GETS OVERWRITTEN) Is Verbosity enabled?
-	 * @param args arguments specified in the command line
-	 * @throws Exception
-	 */
-	public void checkValidTestArgs (String[] args) throws Exception
-	{
-		// Makes sure the file extensions are correct.
-		checkExtensions();		
-				
-		// Getting parameter from argument file
-		// Should make this in a separate method later. (repeated code)
-		try
-		{
-			Scanner sc = new Scanner(argFile);
-			window = Integer.parseInt(sc.next());
-			threshold = Double.parseDouble(sc.next());
-			sc.close();
-		}
-		catch (NoSuchElementException e)
-		{
-			logger.severe("Not enough lines in argument file, there must be at least 2 lines");
-		}
-		catch (NumberFormatException e)
-		{
-			logger.severe("Invalid format inside argument file, format must be of type integer and double");
-		}
-	}
-	
-	/**
 	 * Given the values, executes the MSM module and generates Orders
 	 * @param msm MSM module
 	 * @param logger MyLogger object
@@ -315,9 +279,9 @@ public class MSMInstance
 	 * @param args arguments given to the program
 	 * @return File pointing to sircaFile
 	 */
-	public File getSircaFile (String[] args, boolean test)
+	public File getSircaFile (String[] args)
 	{
-		if (test)
+		if (this.test)
 		{
 			return new File(args[2]);
 		}
@@ -331,9 +295,9 @@ public class MSMInstance
 	 * @param args arguments given to the program
 	 * @return File pointing to argsFile
 	 */
-	public File getArgsFile (String[] args, boolean test)
+	public File getArgsFile (String[] args)
 	{
-		if (test)
+		if (this.test)
 		{
 			return new File(args[3]);
 		}
